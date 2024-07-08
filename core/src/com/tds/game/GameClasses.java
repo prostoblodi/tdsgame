@@ -3,12 +3,10 @@ package com.tds.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,8 +23,9 @@ public class GameClasses {
         private final Rectangle hitBox;
         private boolean active;
         private final Array<BadBoy> badBoysArray;
+        private final byte damage;
 
-        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray) {
+        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage) {
             this.texture = texture;
             this.x = startX;
             this.y = startY;
@@ -35,6 +34,8 @@ public class GameClasses {
             this.hitBox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
             this.active = true;
             this.badBoysArray = badBoysArray;
+            this.damage = damage;
+
         }
 
         public void update() {
@@ -45,7 +46,7 @@ public class GameClasses {
 
             for (BadBoy badBoys : badBoysArray) {
                 if (Intersector.overlaps(hitBox, badBoys.getRectangleHitBox())) {
-                    badBoys.takeDamage(7);
+                    badBoys.takeDamage(damage);
                     active = false;
                     break;
                 }
@@ -137,7 +138,6 @@ public class GameClasses {
         private boolean active = true;
         private byte badBoysHP = 100;
         private float badBoysHpPercent = 1;
-        private Vector2 vector;
 
         public BadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, Rectangle rectangleHitBox, Circle circleHitBox) {
             this.texture = texture;
@@ -146,7 +146,6 @@ public class GameClasses {
             this.x = x;
             this.rectangleHitBox = rectangleHitBox;
             this.circleHitBox = circleHitBox;
-            this.vector = new Vector2(x, 16);
         }
 
         public void update() {
@@ -186,17 +185,13 @@ public class GameClasses {
             return circleHitBox;
         }
 
-        public void takeDamage(int damage) {
-            badBoysHP -= (byte) damage;
+        public void takeDamage(byte damage) {
+            badBoysHP -= damage;
             badBoysHpPercent = (float) badBoysHP / 100;
         }
 
         public short getX() {
             return x;
-        }
-
-        public Vector2 getVector() {
-            return vector;
         }
     }
 

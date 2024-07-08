@@ -198,7 +198,7 @@ public class MainGameScreen implements Screen {
                 if(gun.isGunCreated() && gun.getGunLevel() == 1) {
                     if (nearest != null) {
                         if (overlaps(gun.getX(), gun.getY(), nearest.getX(), 16, 500, 64)) {
-                            spawnBullet(gun.getX(), gun.getY(), nearest);
+                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 7);
                         }
                     }
                 }
@@ -212,9 +212,7 @@ public class MainGameScreen implements Screen {
                 else if(gun.getGunLevel() == 3){
                     if(nearest != null){
                         if(overlaps(gun.getX(), gun.getY(), nearest.getX(), 16, 800, 64)){
-                            spawnBullet(gun.getX(), gun.getY(), nearest);
-                            spawnBullet(gun.getX(), gun.getY(), nearest);
-                            spawnBullet(gun.getX(), gun.getY(), nearest);
+                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 14);
                         }
                     }
                 }
@@ -243,7 +241,7 @@ public class MainGameScreen implements Screen {
 
 
 
-    private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest) {
+    private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest, byte damage) {
         // Find the nearest bad boy's position
         float targetX = nearest.getX();
         float targetY = 16; // Target Y position of bad boys
@@ -255,7 +253,7 @@ public class MainGameScreen implements Screen {
         float speedY = deltaY / distance * speed;
 
         // Create a new bullet and add it to the bullets array
-        bullets.add(new GameClasses().new Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray));
+        bullets.add(new GameClasses().new Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, damage));
     }
 
     private void spawnAirBullet(float startX, float startY, GameClasses.AirBadBoy nearest) {
