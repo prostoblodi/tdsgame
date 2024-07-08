@@ -267,18 +267,19 @@ public class GameClasses {
 
     public class Gun {
 
-        private final Texture gunTexture, gun2Texture, gun3Texture;
+        private final Texture gunTexture, gun2Texture, gun3Texture, gun4Texture;
         private final short x;
         private final short y;
         private byte gunLevel = 0;
         private boolean isGunCreated = false;
         private final TextButton button2;
 
-        public Gun(Texture gunTexture, Texture gun2Texture, Texture gun3Texture, Skin buttonSkin, short x, short y, Stage stage) {
+        public Gun(Texture gunTexture, Texture gun2Texture, Texture gun3Texture, Texture gun4Texture, Skin buttonSkin, short x, short y, Stage stage) {
 
             this.gunTexture = gunTexture;
             this.gun2Texture = gun2Texture;
             this.gun3Texture = gun3Texture;
+            this.gun4Texture = gun4Texture;
 
             this.x = x;
             this.y = y;
@@ -337,6 +338,15 @@ public class GameClasses {
             else if(gunLevel == 3){
                 batch.begin();
                 batch.draw(gun3Texture, x, y);
+                batch.end();
+
+                if(badBoysCounter >= 25){
+                    stage.addActor(button2);
+                }
+            }
+            else if(gunLevel == 4){
+                batch.begin();
+                batch.draw(gun4Texture, x, y);
                 batch.end();
             }
             else{

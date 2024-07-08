@@ -148,7 +148,7 @@ public class MainGameScreen implements Screen {
         font.setColor(Color.BLACK);
         short GunXCord = 128;
         for(byte i = 0; i < 6; i++) {
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
+            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
             GunXCord += 128;
         }
         createButtons();
@@ -216,6 +216,14 @@ public class MainGameScreen implements Screen {
                         }
                     }
                 }
+                else if(gun.getGunLevel() == 4){
+                    if(nearest != null){
+                        if(overlaps(gun.getX(), gun.getY(), nearest.getX(), 16, 800, 64)){
+                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 35);
+                        }
+                    }
+                }
+
             }
             timeSinceLastBullet = 0;
         }
