@@ -1,9 +1,7 @@
 package com.tds.game;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,24 +13,29 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
+import java.awt.*;
+
 public class SettingsScreen implements Screen {
     private final Game game;
     private final AssetManager assetManager;
     private final Stage stage;
     private TextButton backButton, windowButton, fullscreenButton;
     private boolean isFullscreen = false;
-    private boolean opened = false;
+    private final boolean isAndroid;
 
     public SettingsScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
         this.stage = new Stage(new ScreenViewport());
+        this.isAndroid = Gdx.app.getType() == Application.ApplicationType.Android;
 
         createButtons();
 
-        if (!opened) {
+        if (Gdx.graphics.isFullscreen()) {
             setFullscreen();
-            opened = true;
+        }
+        else{
+            setWindowed();
         }
     }
 
@@ -111,15 +114,14 @@ public class SettingsScreen implements Screen {
     }
 
     private void adjustButtonPositions() {
-        if (isFullscreen) {
+        if (isFullscreen || isAndroid) {
             backButton.setPosition(0, 920);
-            windowButton.setPosition(438, 540);
-            fullscreenButton.setPosition(960, 540);
-        } else {
-            backButton.setPosition(0, 850);
-            windowButton.setPosition(438, 540);
-            fullscreenButton.setPosition(960, 540);
         }
+        else {
+            backButton.setPosition(0, 850);
+        }
+        windowButton.setPosition(438, 540);
+        fullscreenButton.setPosition(960, 540);
     }
 
     @Override
