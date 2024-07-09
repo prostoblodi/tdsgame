@@ -24,8 +24,9 @@ public class GameClasses {
         private boolean active;
         private final Array<BadBoy> badBoysArray;
         private final byte damage;
+        private Boss boss;
 
-        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage) {
+        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage, Boss boss) {
             this.texture = texture;
             this.x = startX;
             this.y = startY;
@@ -35,7 +36,7 @@ public class GameClasses {
             this.active = true;
             this.badBoysArray = badBoysArray;
             this.damage = damage;
-
+            this.boss = boss;
         }
 
         public void update() {
@@ -49,6 +50,11 @@ public class GameClasses {
                     badBoys.takeDamage(damage);
                     active = false;
                     break;
+                }
+            }
+            if(boss != null){
+                if (Intersector.overlaps(hitBox, boss.recHitBox)) {
+                    active = false;
                 }
             }
 
@@ -265,6 +271,38 @@ public class GameClasses {
 
     }
 
+    public class Boss{
+
+        Texture texture;
+        Short x;
+        Circle cirHitBox;
+        Rectangle recHitBox;
+
+        public Boss(Texture texture, short x){
+            this.texture = texture;
+            this.x = x;
+            this.cirHitBox = new Circle(912, 16, 64);
+            this.recHitBox = new Rectangle(912, 16, 128, 128);
+
+        }
+
+        public void draw(Batch batch){
+            batch.draw(texture, x, 16);
+        }
+
+        public void update(){
+            x--;
+            cirHitBox.x--;
+            recHitBox.x--;
+        }
+
+        private void reset(){
+            x = 912;
+            cirHitBox.x = 912;
+            recHitBox.x = 912;
+        }
+    }
+
     public class Gun {
 
         private final Texture gunTexture, gun2Texture, gun3Texture, gun4Texture;
@@ -340,7 +378,7 @@ public class GameClasses {
                 batch.draw(gun3Texture, x, y);
                 batch.end();
 
-                if(badBoysCounter >= 25){
+                if(badBoysCounter >= 22){
                     stage.addActor(button2);
                 }
             }
