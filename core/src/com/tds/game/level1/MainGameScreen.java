@@ -1,4 +1,4 @@
-package com.tds.game;
+package com.tds.game.level1;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.tds.game.universal.GameClasses;
+import com.tds.game.other.MenuScreen;
+import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
 
 public class MainGameScreen implements Screen {
 
@@ -70,6 +73,7 @@ public class MainGameScreen implements Screen {
         assetManager.load("upgradeGunO.png", Texture.class);
         // finish loading
         assetManager.finishLoading();
+        System.out.println("}- Textures has been loaded");
         // save some pictures
         endImg = assetManager.get("end.png", Texture.class);
         roadImg = assetManager.get("road.png", Texture.class);
@@ -109,7 +113,7 @@ public class MainGameScreen implements Screen {
         skin.add("gunButtonStyle", buttonStyle);
         skin.add("updatedGunStyle", button2Style);
 
-        System.out.println("}- Textures has been loaded");
+        System.out.println("}- Textures has been get");
 
         setupInitialState();
     }

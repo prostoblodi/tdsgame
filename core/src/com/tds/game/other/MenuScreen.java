@@ -1,4 +1,4 @@
-package com.tds.game;
+package com.tds.game.other;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.tds.game.level1.MainGameScreen;
 
 public class MenuScreen implements Screen {
     private final Game game;

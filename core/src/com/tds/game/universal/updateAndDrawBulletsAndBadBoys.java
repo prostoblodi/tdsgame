@@ -1,4 +1,4 @@
-package com.tds.game;
+package com.tds.game.universal;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.tds.game.level2.AfterBossScreen;
+import com.tds.game.other.MenuScreen;
 
 import java.util.Iterator;
 
@@ -17,7 +19,7 @@ public class updateAndDrawBulletsAndBadBoys {
 
     float airRespawnTime = 5, respawnTime = 3;
 
-    short badBoysCounter;
+    public short badBoysCounter;
 
     private TextureRegion textureRegion;
     private Texture airBadBoyImg, redHp, AAbltImg, bltImg, badBoysImg;
@@ -175,7 +177,9 @@ public class updateAndDrawBulletsAndBadBoys {
 
         if(boss != null){
             if(boss.x <= 16){
-                game.setScreen(new AfterBossScreen());
+                System.out.println("}-- Boss is in the end");
+                game.setScreen(new AfterBossScreen(game, assetManager, false));
+                return;
             }
         }
 
@@ -203,7 +207,7 @@ public class updateAndDrawBulletsAndBadBoys {
             }
         }
 
-        if(badBoysCounter >= 40 && !isBossCreated){
+        if(badBoysCounter >= 1 && !isBossCreated){
             boss = new GameClasses().new Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912);
             isBossCreated = true;
             System.out.println("}-- Boss has been created");
@@ -235,6 +239,7 @@ public class updateAndDrawBulletsAndBadBoys {
             boss.update();
             boss.draw(batch);
             System.out.println("}-- Boss has been updated");
+
         }
     }
 

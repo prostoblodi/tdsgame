@@ -1,4 +1,4 @@
-package com.tds.game;
+package com.tds.game.other;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics;
@@ -12,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-
-import java.awt.*;
 
 public class SettingsScreen implements Screen {
     private final Game game;

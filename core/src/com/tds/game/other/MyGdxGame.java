@@ -1,4 +1,4 @@
-package com.tds.game;
+package com.tds.game.other;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
