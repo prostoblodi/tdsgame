@@ -1,4 +1,4 @@
-package com.tds.game.level2;
+package com.tds.game.otherLevels;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -13,27 +13,27 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class TextAnimator implements Screen {
 
-    private Game game;
-    private AssetManager assetManager;
+    private final Game game;
+    private final AssetManager assetManager;
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private String fullText = "End? No. Begin"; // Полный текст
-    private StringBuilder displayedText = new StringBuilder(); // Текст для отображения
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final BitmapFont font;
+    private final StringBuilder displayedText = new StringBuilder(); // Текст для отображения
 
     private float timeElapsed;
-    private float charInterval = 0.1f;// Интервал появления символов в секундах
 
     private int currentCharIndex = 0;
 
-    private boolean isSwitched;
+    private final boolean isSwitched;
+    private final short badBoysCounter;
 
 
-    public TextAnimator(Game game, AssetManager assetManager) {
+    public TextAnimator(Game game, AssetManager assetManager, short badBoysCounter) {
         this.game = game;
         this.assetManager = assetManager;
         this.isSwitched = true;
+        this.badBoysCounter = badBoysCounter;
 
         /*Initialises the generator using the file location given.*/
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("font.ttf"));
@@ -57,12 +57,11 @@ public class TextAnimator implements Screen {
     @Override
     public void show() {
         // Любая логика, которую нужно выполнить при показе экрана
-        System.out.println("TextAnimator show called");
+        System.out.println("}-+ Show called");
     }
 
     @Override
     public void render(float delta) {
-        System.out.println("TextAnimator render called");
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -71,13 +70,17 @@ public class TextAnimator implements Screen {
 
         timeElapsed += Gdx.graphics.getDeltaTime();
 
+        // Интервал появления символов в секундах
+        float charInterval = 0.1f;
+        // Полный текст
+        String fullText = "End? No. Begin";
         if (timeElapsed > charInterval && currentCharIndex < fullText.length()) {
             displayedText.append(fullText.charAt(currentCharIndex));
             currentCharIndex++;
             timeElapsed = 0;
         }
         else if(currentCharIndex == fullText.length()){
-            game.setScreen(new AfterBossScreen(game, assetManager, isSwitched));
+            game.setScreen(new AfterBossScreen(game, assetManager, isSwitched, badBoysCounter));
         }
 
         batch.begin();

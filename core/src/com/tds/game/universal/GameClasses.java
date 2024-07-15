@@ -340,6 +340,7 @@ public class GameClasses {
                     isGunCreated = true;
                     gunLevel = 1;
                     button.remove();
+                    System.out.println("} Gun spawn button has been clicked");
                 }
             });
             button2.addListener(new ClickListener() {
@@ -349,6 +350,7 @@ public class GameClasses {
                     button2.remove();
                 }
             });
+            System.out.println("} Gun has been created");
         }
 
         public void draw(Batch batch, Stage stage, float delta, short badBoysCounter) {

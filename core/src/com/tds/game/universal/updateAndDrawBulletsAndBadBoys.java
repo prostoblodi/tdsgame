@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.tds.game.level2.AfterBossScreen;
+import com.tds.game.otherLevels.AfterBossScreen;
 import com.tds.game.other.MenuScreen;
 
 import java.util.Iterator;
@@ -178,7 +178,7 @@ public class updateAndDrawBulletsAndBadBoys {
         if(boss != null){
             if(boss.x <= 16){
                 System.out.println("}-- Boss is in the end");
-                game.setScreen(new AfterBossScreen(game, assetManager, false));
+                game.setScreen(new AfterBossScreen(game, assetManager, false, badBoysCounter));
                 return;
             }
         }
