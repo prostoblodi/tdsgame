@@ -68,8 +68,7 @@ public class updateAndDrawBulletsAndBadBoys {
        System.out.println("}-- textures has been get");
     }
 
-
-    public void updateAndDrawBullets(float delta) {
+   public void updateAndDrawBullets(float delta) {
         GameClasses.BadBoy nearest;
         GameClasses.AirBadBoy nearestAir;
         timeSinceLastBullet += delta;
@@ -149,7 +148,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
     }
 
-    public void updateAndDrawBadBoys(float delta) {
+   public void updateAndDrawBadBoys(float delta) {
         long time = TimeUtils.nanoTime() - startTime;
         long seconds = time / 1000000000L;
 
@@ -184,14 +183,14 @@ public class updateAndDrawBulletsAndBadBoys {
         }
 
         if (timeSinceLastBadBoy >= respawnTime && !isBossCreated) {
-            GameClasses.BadBoy badBoy = new GameClasses().new BadBoy(badBoysImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
+            GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
             badBoysArray.add(badBoy);
             badBoysCounter++;
 
             System.out.println("}-- " + badBoysCounter + " bad boy has been created");
 
             if(badBoysCounter >= 10 && !airBadBoyCreated){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses().new AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912,16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, (airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 System.out.println("}-- first air bad boy has been created");
                 airBadBoyCreated = true;
@@ -200,15 +199,15 @@ public class updateAndDrawBulletsAndBadBoys {
         }
         else if(airBadBoyCreated && !isBossCreated){
             if(timeSinceLastAirBadBoy >= airRespawnTime){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses().new AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912,16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, (airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 System.out.println("}-- not first air bad boy has been created");
                 timeSinceLastAirBadBoy = 0;
             }
         }
 
-        if(badBoysCounter >= 1 && !isBossCreated){
-            boss = new GameClasses().new Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912);
+        if(badBoysCounter >= 25 && !isBossCreated){
+            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912);
             isBossCreated = true;
             System.out.println("}-- Boss has been created");
         }
@@ -220,7 +219,7 @@ public class updateAndDrawBulletsAndBadBoys {
             GameClasses.BadBoy badBoys = iter.next();
             badBoys.update();
             badBoys.draw(batch);
-            if (!badBoys.isActive()) {
+            if (badBoys.isActive()) {
                 iter.remove();
             }
         }
@@ -230,7 +229,7 @@ public class updateAndDrawBulletsAndBadBoys {
             GameClasses.AirBadBoy airbadBoy = iter2.next();
             airbadBoy.update();
             airbadBoy.draw(batch); // Ensure batch is passed to draw method
-            if (!airbadBoy.isActive()) {
+            if (airbadBoy.isActive()) {
                 iter2.remove();
             }
         }
@@ -238,12 +237,10 @@ public class updateAndDrawBulletsAndBadBoys {
         if(boss != null) {
             boss.update();
             boss.draw(batch);
-            System.out.println("}-- Boss has been updated");
-
         }
     }
 
-    private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest, byte damage) {
+   private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest, byte damage) {
         float targetX = nearest.getX();
         float targetY = 16; // Target Y position of bad boys
         float deltaX = targetX - startX;
@@ -253,11 +250,11 @@ public class updateAndDrawBulletsAndBadBoys {
         float speedX = deltaX / distance * speed;
         float speedY = deltaY / distance * speed;
 
-        bullets.add(new GameClasses().new Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, damage, boss));
+        bullets.add(new GameClasses.Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, damage, boss));
 
     }
 
-    private void spawnAirBullet(float startX, float startY, GameClasses.AirBadBoy nearest) {
+   private void spawnAirBullet(float startX, float startY, GameClasses.AirBadBoy nearest) {
         // Find the nearest bad boy's position
         float targetX = nearest.getX();
         float targetY = 16; // Target Y position of bad boys
@@ -268,10 +265,10 @@ public class updateAndDrawBulletsAndBadBoys {
         float speedX = deltaX / distance * speed;
         float speedY = deltaY / distance * speed;
 
-        AAbullets.add(new GameClasses().new AABullet(AAbltImg, startX, startY, speedX, speedY, airBadBoys));
+        AAbullets.add(new GameClasses.AABullet(AAbltImg, startX, startY, speedX, speedY, airBadBoys));
     }
 
-    private void spawnBossBullet(float startX, float startY, GameClasses.Boss boss){
+   private void spawnBossBullet(float startX, float startY, GameClasses.Boss boss){
         float targetX = boss.x;
         float targetY = 16; // Target Y position of bad boys
         float deltaX = targetX - startX;
@@ -281,10 +278,10 @@ public class updateAndDrawBulletsAndBadBoys {
         float speedX = deltaX / distance * speed;
         float speedY = deltaY / distance * speed;
 
-        bullets.add(new GameClasses().new Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, (byte) 7, boss));
+        bullets.add(new GameClasses.Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, (byte) 7, boss));
     }
 
-    private boolean overlaps(float x, float y, float cx, float radius) {
+   private boolean overlaps(float x, float y, float cx, float radius) {
         float dx = x - cx;
         float dy = y - (float) 16;
         float distance = dx * dx + dy * dy;

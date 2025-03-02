@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameClasses {
 
-    public class Bullet {
+    public static class Bullet {
         private final Texture texture;
         private float x, y;
         private final float speedX, speedY;
@@ -24,7 +24,7 @@ public class GameClasses {
         private boolean active;
         private final Array<BadBoy> badBoysArray;
         private final byte damage;
-        private Boss boss;
+        private final Boss boss;
 
         public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage, Boss boss) {
             this.texture = texture;
@@ -78,7 +78,7 @@ public class GameClasses {
         }
     }
 
-    public class AABullet {
+    public static class AABullet {
         private final Texture texture;
         private float x, y;
         private final float speedX, speedY;
@@ -132,10 +132,7 @@ public class GameClasses {
         }
     }
 
-
-
-
-    public class BadBoy {
+    public static class BadBoy {
         private final Texture texture, redHp;
         private final TextureRegion greenHp;
         private short x;
@@ -180,7 +177,7 @@ public class GameClasses {
         }
 
         public boolean isActive() {
-            return active;
+            return !active;
         }
 
         public Rectangle getRectangleHitBox() {
@@ -201,8 +198,7 @@ public class GameClasses {
         }
     }
 
-
-    public class AirBadBoy {
+    public static class AirBadBoy {
         private final Texture texture, redHp;
         private final TextureRegion greenHp;
         private short x;
@@ -210,7 +206,7 @@ public class GameClasses {
         private final Circle circleHitBox;
         private boolean active = true;
         private short AirBadBoyHP = 100;
-        private float AirbadBoyHpPercent = 1;
+        private float AirBadBoyHpPercent = 1;
 
 
         public AirBadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, Rectangle rectangleHitBox, Circle circleHitBox) {
@@ -243,12 +239,12 @@ public class GameClasses {
         public void draw(Batch batch) {
             batch.draw(texture, x, 16);
             batch.draw(redHp, x - 44, 112);
-            greenHp.setRegionWidth((int) (185 * AirbadBoyHpPercent));
+            greenHp.setRegionWidth((int) (185 * AirBadBoyHpPercent));
             batch.draw(greenHp, x - 44, 112, greenHp.getRegionWidth(), greenHp.getRegionHeight());
         }
 
         public boolean isActive() {
-            return active;
+            return !active;
         }
 
         public Rectangle getRectangleHitBox() {
@@ -261,7 +257,7 @@ public class GameClasses {
 
         public void takeDamage(int damage) {
             AirBadBoyHP -= (byte) damage;
-            AirbadBoyHpPercent = (float) AirBadBoyHP / 100;
+            AirBadBoyHpPercent = (float) AirBadBoyHP / 100;
         }
 
         public short getX() {
@@ -271,7 +267,7 @@ public class GameClasses {
 
     }
 
-    public class Boss{
+    public static class Boss{
 
         Texture texture;
         Short x;
@@ -295,15 +291,9 @@ public class GameClasses {
             cirHitBox.x--;
             recHitBox.x--;
         }
-
-        private void reset(){
-            x = 912;
-            cirHitBox.x = 912;
-            recHitBox.x = 912;
-        }
     }
 
-    public class Gun {
+    public static class Gun {
 
         private final Texture gunTexture, gun2Texture, gun3Texture, gun4Texture;
         private final short x;
@@ -400,7 +390,7 @@ public class GameClasses {
             float minDistance = Float.MAX_VALUE;
 
             for (BadBoy badBoy : badBoysArray) {
-                if (!badBoy.isActive()) continue;
+                if (badBoy.isActive()) continue;
 
                 float distance = (float) Math.sqrt(Math.pow(badBoy.getX() - x, 2) + Math.pow(badBoy.getCircleHitBox().y - y, 2));
                 if (distance < minDistance) {
@@ -418,7 +408,7 @@ public class GameClasses {
             float minDistance = Float.MAX_VALUE;
 
             for (AirBadBoy airBadBoy : AirBadBoysArray) {
-                if (!airBadBoy.isActive()) continue;
+                if (airBadBoy.isActive()) continue;
 
                 float distance = (float) Math.sqrt(Math.pow(airBadBoy.getX() - x, 2) + Math.pow(airBadBoy.getCircleHitBox().y - y, 2));
                 if (distance < minDistance) {

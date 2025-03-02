@@ -10,10 +10,8 @@ public class MyGdxGame extends Game {
 
 	@Override
 	public void create() {
-		// Получаем информацию о дисплее
 		Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
 
-		// Устанавливаем полноэкранный режим с использованием текущей разрешения дисплея
 		Gdx.graphics.setFullscreenMode(displayMode);
 		assetManager = new AssetManager();
 		setScreen(new LoadingScreen(this, assetManager));

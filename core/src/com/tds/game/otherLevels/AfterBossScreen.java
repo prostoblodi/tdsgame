@@ -18,27 +18,23 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.tds.game.other.MenuScreen;
 import com.tds.game.universal.GameClasses;
-import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
 
 public class AfterBossScreen implements Screen {
 
-    private SpriteBatch batch = new SpriteBatch();
-    private BitmapFont font;
+    private final SpriteBatch batch = new SpriteBatch();
     private Skin skin = new Skin();
-    private Stage stage = new Stage();
+    private final Stage stage = new Stage();
 
-    private AssetManager assetManager;
-    private Game game;
-    private Boolean isSwitched;
+    private final AssetManager assetManager;
+    private final Game game;
+    private final Boolean isSwitched;
 
     Texture endImg, roadImg, startImg, menuUp, menuDown, menuO;
     private final TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
 
     private final Array<GameClasses.Gun> guns = new Array<>();
 
-    private updateAndDrawBulletsAndBadBoys update;
-
-    private short badBoysCounter;
+    private final short badBoysCounter;
 
 
     public AfterBossScreen(Game game, AssetManager assetManager, Boolean isSwitched, short badBoysCounter) {
@@ -126,8 +122,6 @@ public class AfterBossScreen implements Screen {
     }
 
     private void setupInitialState() {
-        update = new updateAndDrawBulletsAndBadBoys(batch, guns, game, assetManager, badBoysCounter);
-
         createMenuButton();
         addGuns();
 
@@ -199,43 +193,43 @@ public class AfterBossScreen implements Screen {
         short GunXCord = 1792;
 
         for(byte i = 0; i < 4; i++) { // create 3 guns
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 824, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 824, stage));
             GunXCord -= 128;
         }
 
         short GunYCord = 256;
 
         for(byte i = 0; i < 3; i++) { // create 3 guns
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, GunYCord, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, GunYCord, stage));
             GunYCord += 128;
         }
 
         GunXCord = 0;
 
         for(byte i =  0; i < 10; i++){
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 348, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 348, stage));
             GunXCord += 128;
         }
 
         GunXCord = 0;
 
         for(byte i =  0; i < 10; i++){
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 604, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 604, stage));
             GunXCord += 128;
         }
 
         GunYCord = 220;
 
         for(byte i = 0; i < 2; i++){
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, (short) 1152, GunYCord, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, (short) 1152, GunYCord, stage));
             GunYCord -= 128;
         }
 
         GunYCord = 732;
 
         for(byte i = 0; i < 2; i++){
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, (short) 1152, GunYCord, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, (short) 1152, GunYCord, stage));
             GunYCord += 128;
         }
     }
@@ -267,6 +261,5 @@ public class AfterBossScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
     }
 }

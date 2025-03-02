@@ -130,7 +130,7 @@ public class MainGameScreen implements Screen {
         short GunXCord = 128;
 
         for(byte i = 0; i < 6; i++) { // create 6 guns
-            guns.add(new GameClasses().new Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
             GunXCord += 128;
         }
 
