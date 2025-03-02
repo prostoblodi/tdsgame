@@ -25,16 +25,16 @@ import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
 
 public class MainGameScreen implements Screen {
 
-    private updateAndDrawBulletsAndBadBoys update;
+    private updateAndDrawBulletsAndBadBoys update; // Function that update bad boys and bullets
 
-    private final Game game;
-    private final AssetManager assetManager;
-    private SpriteBatch batch;
-    private Stage stage;
-    public Skin skin;
+    private final Game game; // Main game variable, makes it possible to open different windows
+    private final AssetManager assetManager; // Just an asset manager(textures, etc.)
+    private SpriteBatch batch; // Variable that is needed for rendering textures
+    private Stage stage; // Variable that is needed to render buttons
+    public Skin skin; // A variable that assigns objects their textures
 
-    private Texture endImg, roadImg, startImg, menuUp, menuDown, menuO;
-    private BitmapFont font;
+    private Texture endImg, roadImg, startImg, menuUp, menuDown, menuO; // Textures
+    private BitmapFont font; // Text
 
     private final TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
 
@@ -48,35 +48,45 @@ public class MainGameScreen implements Screen {
     }
 
     @Override
-    public void show() {
+    public void show() { // Load all textures
         this.batch = new SpriteBatch();
         this.stage = new Stage(new ScreenViewport());
+
         Gdx.input.setInputProcessor(stage);
+
         // load end picture
         assetManager.load("end.png", Texture.class);
+
         // load guns pictures
         assetManager.load("gun.png", Texture.class);
         assetManager.load("AAGun.png", Texture.class);
         assetManager.load("2xGun.png", Texture.class);
+
         // load road and start(bad boys spawn) pictures
         assetManager.load("road.png", Texture.class);
         assetManager.load("start.png", Texture.class);
+
         // load hp pictures
         assetManager.load("redHp.png", Texture.class);
         assetManager.load("greenHp.png", Texture.class);
+
         // load menu button picture
         assetManager.load("menuButton.png", Texture.class);
+
         // load gun spawn button picture
         assetManager.load("nothing.png", Texture.class);
         assetManager.load("nothingD.png", Texture.class);
         assetManager.load("nothingO.png", Texture.class);
+
         // load upgrade gun button picture
         assetManager.load("upgradeGun.png", Texture.class);
         assetManager.load("upgradeGunD.png", Texture.class);
         assetManager.load("upgradeGunO.png", Texture.class);
+
         // finish loading
         assetManager.finishLoading();
         System.out.println("}- Textures has been loaded");
+
         // save some pictures
         endImg = assetManager.get("end.png", Texture.class);
         roadImg = assetManager.get("road.png", Texture.class);
@@ -86,10 +96,12 @@ public class MainGameScreen implements Screen {
         Texture gunButtonUp = assetManager.get("nothing.png", Texture.class);
         Texture gunButtonDown = assetManager.get("nothingD.png", Texture.class);
         Texture gunButtonO = assetManager.get("nothingO.png", Texture.class);
+
         // save upgrade gun button pictures
         Texture upgradeGun = assetManager.get("upgradeGun.png", Texture.class);
         Texture upgradeGunD = assetManager.get("upgradeGunD.png", Texture.class);
         Texture upgradeGunO = assetManager.get("upgradeGunO.png", Texture.class);
+
         // save menu button pictures
         menuUp = assetManager.get("menuButton.png", Texture.class);
         menuDown = assetManager.get("menuButtonD.png", Texture.class);
@@ -105,6 +117,7 @@ public class MainGameScreen implements Screen {
         buttonStyle.down = new TextureRegionDrawable(new TextureRegion(gunButtonDown));
         buttonStyle.over = new TextureRegionDrawable(new TextureRegion(gunButtonO));
         buttonStyle.font = skin.getFont("default-font");
+
         // create upgrade gun button style
         TextButton.TextButtonStyle button2Style = new TextButton.TextButtonStyle();
         button2Style.up = new TextureRegionDrawable(new TextureRegion(upgradeGun));
@@ -121,7 +134,7 @@ public class MainGameScreen implements Screen {
         setupInitialState();
     }
 
-    private void setupInitialState() {
+    private void setupInitialState() { // Base state of some variables
         font = new BitmapFont();
         font.setColor(Color.BLACK);
 
@@ -141,6 +154,7 @@ public class MainGameScreen implements Screen {
     @Override
     public void render(float delta) {
         badBoysCounter = update.badBoysCounter;
+
         byte moreKills = (byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0);
         boolean show = moreKills != 0;
 
@@ -175,6 +189,7 @@ public class MainGameScreen implements Screen {
 
     public void createButtons(){
         short y = (short) (!Gdx.graphics.isFullscreen() ? 860 : 920);
+
         menuStyle.up = new TextureRegionDrawable(new TextureRegion(menuUp));
         menuStyle.down = new TextureRegionDrawable(new TextureRegion(menuDown));
         menuStyle.over = new TextureRegionDrawable(new TextureRegion(menuO));
