@@ -41,7 +41,7 @@ public class updateAndDrawBulletsAndBadBoys {
     Game game;
     AssetManager assetManager;
 
-    public updateAndDrawBulletsAndBadBoys(Batch batch, Array<GameClasses.Gun> guns, Game game, AssetManager assetManager, short badBoysCounter) {
+   public updateAndDrawBulletsAndBadBoys(Batch batch, Array<GameClasses.Gun> guns, Game game, AssetManager assetManager, short badBoysCounter) {
         this.batch = batch;
         this.guns = guns;
         this.assetManager = assetManager;
@@ -81,44 +81,29 @@ public class updateAndDrawBulletsAndBadBoys {
 
                 if(gun.isGunCreated() && gun.getGunLevel() == 1) {
                     if (nearest != null) {
-                        if (overlaps(gun.getX(), gun.getY(), nearest.getX(), 500)) {
-                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 7);
-                        }
-                    }
-                    else if(boss != null){
-                        if (overlaps(gun.getX(), gun.getY(), boss.x, 500)){
-                            spawnBossBullet(gun.getX(), gun.getY(), boss);
+                        if (overlaps(gun.x, gun.y, nearest.getX(), 500)) {
+                            spawnBullet(gun.x, gun.y, nearest, (byte) 7);
                         }
                     }
                 }
                 else if(gun.getGunLevel() == 2){
                     if(nearestAir != null){
-                        if(overlaps(gun.getX(), gun.getY(), nearestAir.getX(), 700)) {
-                            spawnAirBullet(gun.getX(), gun.getY(), nearestAir);
+                        if(overlaps(gun.x, gun.y, nearestAir.getX(), 700)) {
+                            spawnAirBullet(gun.x, gun.y, nearestAir);
                         }
                     }
                 }
                 else if(gun.getGunLevel() == 3){
                     if(nearest != null){
-                        if(overlaps(gun.getX(), gun.getY(), nearest.getX(), 800)){
-                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 14);
-                        }
-                    }
-                    else if(boss != null){
-                        if (overlaps(gun.getX(), gun.getY(), boss.x, 500)){
-                            spawnBossBullet(gun.getX(), gun.getY(), boss);
+                        if(overlaps(gun.x, gun.y, nearest.getX(), 800)){
+                            spawnBullet(gun.x, gun.y, nearest, (byte) 14);
                         }
                     }
                 }
                 else if(gun.getGunLevel() == 4){
                     if(nearest != null){
-                        if(overlaps(gun.getX(), gun.getY(), nearest.getX(), 800)){
-                            spawnBullet(gun.getX(), gun.getY(), nearest, (byte) 35);
-                        }
-                    }
-                    else if(boss != null){
-                        if (overlaps(gun.getX(), gun.getY(), boss.x, 800)){
-                            spawnBossBullet(gun.getX(), gun.getY(), boss);
+                        if(overlaps(gun.x, gun.y, nearest.getX(), 800)){
+                            spawnBullet(gun.x, gun.y, nearest, (byte) 35);
                         }
                     }
                 }
@@ -183,14 +168,14 @@ public class updateAndDrawBulletsAndBadBoys {
         }
 
         if (timeSinceLastBadBoy >= respawnTime && !isBossCreated) {
-            GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
+            GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
             badBoysArray.add(badBoy);
             badBoysCounter++;
 
             System.out.println("}-- " + badBoysCounter + " bad boy has been created");
 
             if(badBoysCounter >= 10 && !airBadBoyCreated){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 System.out.println("}-- first air bad boy has been created");
                 airBadBoyCreated = true;
@@ -199,7 +184,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
         else if(airBadBoyCreated && !isBossCreated){
             if(timeSinceLastAirBadBoy >= airRespawnTime){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 System.out.println("}-- not first air bad boy has been created");
                 timeSinceLastAirBadBoy = 0;
@@ -207,7 +192,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
 
         if(badBoysCounter >= 25 && !isBossCreated){
-            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912);
+            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912, (short) 16);
             isBossCreated = true;
             System.out.println("}-- Boss has been created");
         }
@@ -240,7 +225,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
     }
 
-   private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest, byte damage) {
+   private void spawnBullet(float startX, float startY, GameClasses.OnGround nearest, byte damage) {
         float targetX = nearest.getX();
         float targetY = 16; // Target Y position of bad boys
         float deltaX = targetX - startX;
@@ -268,19 +253,6 @@ public class updateAndDrawBulletsAndBadBoys {
         AAbullets.add(new GameClasses.AABullet(AAbltImg, startX, startY, speedX, speedY, airBadBoys));
     }
 
-   private void spawnBossBullet(float startX, float startY, GameClasses.Boss boss){
-        float targetX = boss.x;
-        float targetY = 16; // Target Y position of bad boys
-        float deltaX = targetX - startX;
-        float deltaY = targetY - startY;
-        float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        float speed = 200; // Bullet speed
-        float speedX = deltaX / distance * speed;
-        float speedY = deltaY / distance * speed;
-
-        bullets.add(new GameClasses.Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, (byte) 7, boss));
-    }
-
    private boolean overlaps(float x, float y, float cx, float radius) {
         float dx = x - cx;
         float dy = y - (float) 16;
@@ -288,5 +260,25 @@ public class updateAndDrawBulletsAndBadBoys {
         float radiusSum = radius + (float) 64;
         return distance < radiusSum * radiusSum;
     }
+
+   public void enableDebugMode(){
+       for(GameClasses.BadBoy badBoy : badBoysArray){
+           badBoy.enableDebugMode();
+       }
+
+       for(GameClasses.AirBadBoy airbadBoy : airBadBoys){
+           airbadBoy.enableDebugMode();
+       }
+
+       for(GameClasses.Bullet bullet: bullets){
+           bullet.enableDebugMode();
+       }
+
+       for(GameClasses.AABullet AAbullet: AAbullets){
+           AAbullet.enableDebugMode();
+       }
+
+       boss.enableDebugMode();
+   }
 
 }

@@ -173,6 +173,10 @@ public class MainGameScreen implements Screen {
             font.draw(batch, "For upgrade you need kill " + moreKills + " more bad boys", 128, 256); // это враньё, там просто считается сколько вышло чубриков
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.F1)) {
+            update.enableDebugMode();
+        }
+
         update.updateAndDrawBullets(delta);
         update.updateAndDrawBadBoys(delta);
 

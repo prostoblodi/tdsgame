@@ -1,8 +1,10 @@
 package com.tds.game.universal;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -14,29 +16,50 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
+import static java.lang.String.format;
+
 public class GameClasses {
+
+    public interface OnGround {
+        short getX();
+        short getY();
+    }
+
 
     public static class Bullet {
         private final Texture texture;
+
         private float x, y;
         private final float speedX, speedY;
+
         private final Rectangle hitBox;
-        private boolean active;
+        private final BitmapFont font = new BitmapFont();
+
+        private boolean active = true;
+        private boolean debugMode = false;
+
         private final Array<BadBoy> badBoysArray;
-        private final byte damage;
         private final Boss boss;
+
+        private final byte damage;
 
         public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage, Boss boss) {
             this.texture = texture;
+
             this.x = startX;
             this.y = startY;
+
             this.speedX = speedX;
             this.speedY = speedY;
+
             this.hitBox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
-            this.active = true;
+
+            font.setColor(Color.BLUE);
+
             this.badBoysArray = badBoysArray;
-            this.damage = damage;
             this.boss = boss;
+
+            this.damage = damage;
         }
 
         public void update() {
@@ -66,11 +89,18 @@ public class GameClasses {
         public void draw(Batch batch) {
             if (active) {
                 batch.draw(texture, x, y);
+                if (debugMode){
+                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), 0,0);
+                }
             }
         }
 
         public boolean isActive() {
             return active;
+        }
+
+        public void enableDebugMode(){
+            this.debugMode = true;
         }
 
         private boolean isOutOfScreen() {
@@ -80,28 +110,39 @@ public class GameClasses {
 
     public static class AABullet {
         private final Texture texture;
+
         private float x, y;
         private final float speedX, speedY;
+
         private final Rectangle hitBox;
-        private boolean active;
+        private final BitmapFont font;
+
+        private boolean active = true;
+        private boolean debugMode = false;
+
         private final Array<AirBadBoy> airBadBoysArray;
 
         public AABullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<AirBadBoy> airBadBoysArray) {
             this.texture = texture;
+
             this.x = startX;
             this.y = startY;
+
             this.speedX = speedX;
             this.speedY = speedY;
-            this.hitBox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
-            this.active = true;
-            this.airBadBoysArray = airBadBoysArray;
 
+            this.hitBox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
+            this.font = new BitmapFont();
+
+            this.airBadBoysArray = airBadBoysArray;
         }
 
         public void update() {
             if (!active) return;
+
             x += speedX * Gdx.graphics.getDeltaTime();
             y += speedY * Gdx.graphics.getDeltaTime();
+
             hitBox.setPosition(x, y);
 
             for (AirBadBoy airBadBoy : airBadBoysArray) {
@@ -120,6 +161,9 @@ public class GameClasses {
         public void draw(Batch batch) {
             if (active) {
                 batch.draw(texture, x, y);
+                if (debugMode){
+                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), 0,0);
+                }
             }
         }
 
@@ -127,26 +171,41 @@ public class GameClasses {
             return active;
         }
 
+        public void enableDebugMode(){
+            this.debugMode = true;
+        }
+
         private boolean isOutOfScreen() {
             return x > Gdx.graphics.getWidth() || x < 0 || y > Gdx.graphics.getHeight() || y < 0;
         }
     }
 
-    public static class BadBoy {
+    public static class BadBoy implements OnGround {
         private final Texture texture, redHp;
         private final TextureRegion greenHp;
+
         private short x;
+        private final short y;
+
         private final Rectangle rectangleHitBox;
         private final Circle circleHitBox;
-        private boolean active = true;
-        private byte badBoysHP = 100;
-        private float badBoysHpPercent = 1;
+        private final BitmapFont font = new BitmapFont();
 
-        public BadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, Rectangle rectangleHitBox, Circle circleHitBox) {
+        private boolean active = true;
+        private boolean debugMode = false;
+
+        private byte badBoyHP = 100;
+        private float badBoyHpPercent = 1;
+
+        public BadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, short y, Rectangle rectangleHitBox, Circle circleHitBox) {
             this.texture = texture;
+
             this.redHp = redHp;
             this.greenHp = greenHp;
+
             this.x = x;
+            this.y = y;
+
             this.rectangleHitBox = rectangleHitBox;
             this.circleHitBox = circleHitBox;
         }
@@ -156,28 +215,29 @@ public class GameClasses {
             rectangleHitBox.setX(x);
             circleHitBox.setX(x);
 
-            if (badBoysHP <= 0) {
-                reset();
+            if (badBoyHP <= 0) {
                 active = false;
             }
         }
 
-        public void reset() {
-            x = 912;
-            rectangleHitBox.setX(x);
-            circleHitBox.setX(x);
-            badBoysHP = 100;
-        }
-
         public void draw(Batch batch) {
-            batch.draw(texture, x, 16);
-            batch.draw(redHp, x - 44, 112);
-            greenHp.setRegionWidth((int) (185 * badBoysHpPercent));
-            batch.draw(greenHp, x - 44, 112, greenHp.getRegionWidth(), greenHp.getRegionHeight());
+            batch.draw(texture, x, y);
+            batch.draw(redHp, x - 44, y + 96);
+
+            greenHp.setRegionWidth((int) (185 * badBoyHpPercent));
+            batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
+
+            if (debugMode){
+                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, badBoyHP, badBoyHpPercent), 0,0);
+            }
         }
 
         public boolean isActive() {
             return !active;
+        }
+
+        public void enableDebugMode(){
+            this.debugMode = true;
         }
 
         public Rectangle getRectangleHitBox() {
@@ -189,31 +249,48 @@ public class GameClasses {
         }
 
         public void takeDamage(byte damage) {
-            badBoysHP -= damage;
-            badBoysHpPercent = (float) badBoysHP / 100;
+            badBoyHP -= damage;
+            badBoyHpPercent = (float) badBoyHP / 100;
         }
 
+        @Override
         public short getX() {
             return x;
+        }
+
+        @Override
+        public short getY(){
+            return y;
         }
     }
 
     public static class AirBadBoy {
         private final Texture texture, redHp;
         private final TextureRegion greenHp;
+
         private short x;
+        private final short y;
+
         private final Rectangle rectangleHitBox;
         private final Circle circleHitBox;
+        private final BitmapFont font = new BitmapFont();
+
         private boolean active = true;
+        private boolean debugMode = false;
+
         private short AirBadBoyHP = 100;
         private float AirBadBoyHpPercent = 1;
 
 
-        public AirBadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, Rectangle rectangleHitBox, Circle circleHitBox) {
+        public AirBadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, short y, Rectangle rectangleHitBox, Circle circleHitBox) {
             this.texture = texture;
+
             this.redHp = redHp;
             this.greenHp = greenHp;
+
             this.x = x;
+            this.y = y;
+
             this.rectangleHitBox = rectangleHitBox;
             this.circleHitBox = circleHitBox;
         }
@@ -224,27 +301,28 @@ public class GameClasses {
             circleHitBox.setX(x);
 
             if (AirBadBoyHP <= 0) {
-                reset();
                 active = false;
             }
         }
 
-        public void reset() {
-            x = 912;
-            rectangleHitBox.setX(x);
-            circleHitBox.setX(x);
-            AirBadBoyHP = 250;
-        }
-
         public void draw(Batch batch) {
-            batch.draw(texture, x, 16);
-            batch.draw(redHp, x - 44, 112);
+            batch.draw(texture, x, y);
+            batch.draw(redHp, x - 44, y + 96);
+
             greenHp.setRegionWidth((int) (185 * AirBadBoyHpPercent));
-            batch.draw(greenHp, x - 44, 112, greenHp.getRegionWidth(), greenHp.getRegionHeight());
+            batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
+
+            if (debugMode){
+                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, AirBadBoyHP, AirBadBoyHpPercent), 0,0);
+            }
         }
 
         public boolean isActive() {
             return !active;
+        }
+
+        public void enableDebugMode(){
+            this.debugMode = true;
         }
 
         public Rectangle getRectangleHitBox() {
@@ -263,27 +341,36 @@ public class GameClasses {
         public short getX() {
             return x;
         }
-
-
     }
 
-    public static class Boss{
+    public static class Boss implements OnGround{
 
         Texture texture;
-        Short x;
-        Circle cirHitBox;
-        Rectangle recHitBox;
 
-        public Boss(Texture texture, short x){
+        short x, y;
+
+        public Circle cirHitBox;
+        public Rectangle recHitBox;
+        private final BitmapFont font = new BitmapFont();
+
+        private boolean debugMode = false;
+
+        public Boss(Texture texture, short x, short y){
             this.texture = texture;
+
             this.x = x;
+            this.y = y;
+
             this.cirHitBox = new Circle(912, 16, 64);
             this.recHitBox = new Rectangle(912, 16, 128, 128);
-
         }
 
         public void draw(Batch batch){
-            batch.draw(texture, x, 16);
+            batch.draw(texture, x, y);
+
+            if (debugMode){
+                font.draw(batch, format("X: %s\nY: %s", x, y), 0,0);
+            }
         }
 
         public void update(){
@@ -291,15 +378,32 @@ public class GameClasses {
             cirHitBox.x--;
             recHitBox.x--;
         }
+
+        public void enableDebugMode(){
+            this.debugMode = true;
+        }
+
+        @Override
+        public short getX() {
+            return x;
+        }
+
+        @Override
+        public short getY() {
+            return y;
+        }
     }
 
     public static class Gun {
 
         private final Texture gunTexture, gun2Texture, gun3Texture, gun4Texture;
-        private final short x;
-        private final short y;
+
+        public final short x;
+        public final short y;
+
         private byte gunLevel = 0;
         private boolean isGunCreated = false;
+
         private final TextButton button2;
 
         public Gun(Texture gunTexture, Texture gun2Texture, Texture gun3Texture, Texture gun4Texture, Skin buttonSkin, short x, short y, Stage stage) {
@@ -423,14 +527,6 @@ public class GameClasses {
 
         public boolean isGunCreated() {
             return isGunCreated;
-        }
-
-        public short getX(){
-            return x;
-        }
-
-        public short getY(){
-            return y;
         }
 
         public byte getGunLevel() {
