@@ -25,7 +25,6 @@ public class GameClasses {
         short getY();
     }
 
-
     public static class Bullet {
         private final Texture texture;
 
@@ -54,7 +53,7 @@ public class GameClasses {
 
             this.hitBox = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
 
-            font.setColor(Color.BLUE);
+            font.setColor(Color.BLACK);
 
             this.badBoysArray = badBoysArray;
             this.boss = boss;
@@ -90,7 +89,7 @@ public class GameClasses {
             if (active) {
                 batch.draw(texture, x, y);
                 if (debugMode){
-                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), 0,0);
+                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), x+5,y+70);
                 }
             }
         }
@@ -206,6 +205,8 @@ public class GameClasses {
             this.x = x;
             this.y = y;
 
+            font.setColor(Color.BLACK);
+
             this.rectangleHitBox = rectangleHitBox;
             this.circleHitBox = circleHitBox;
         }
@@ -228,7 +229,7 @@ public class GameClasses {
             batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
 
             if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, badBoyHP, badBoyHpPercent), 0,0);
+                font.draw(batch, format("X: %s\nY: %s\nHP: %s\nHPP: %f", x, y, badBoyHP, badBoyHpPercent), x + 1,y + 70);
             }
         }
 
@@ -313,7 +314,7 @@ public class GameClasses {
             batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
 
             if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, AirBadBoyHP, AirBadBoyHpPercent), 0,0);
+                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, AirBadBoyHP, AirBadBoyHpPercent), x + 5,y + 70);
             }
         }
 
@@ -369,7 +370,7 @@ public class GameClasses {
             batch.draw(texture, x, y);
 
             if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s", x, y), 0,0);
+                font.draw(batch, format("X: %s\nY: %s", x, y), x + 5,y + 70);
             }
         }
 

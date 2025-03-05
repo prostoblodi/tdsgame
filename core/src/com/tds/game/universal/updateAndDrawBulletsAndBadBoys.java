@@ -177,7 +177,6 @@ public class updateAndDrawBulletsAndBadBoys {
             if(badBoysCounter >= 10 && !airBadBoyCreated){
                 GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
-                System.out.println("}-- first air bad boy has been created");
                 airBadBoyCreated = true;
             }
             timeSinceLastBadBoy = 0;
@@ -186,16 +185,15 @@ public class updateAndDrawBulletsAndBadBoys {
             if(timeSinceLastAirBadBoy >= airRespawnTime){
                 GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
-                System.out.println("}-- not first air bad boy has been created");
                 timeSinceLastAirBadBoy = 0;
             }
         }
 
-        if(badBoysCounter >= 25 && !isBossCreated){
-            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912, (short) 16);
-            isBossCreated = true;
-            System.out.println("}-- Boss has been created");
-        }
+//        if(badBoysCounter >= 25 && !isBossCreated){
+//            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912, (short) 16);
+//            isBossCreated = true;
+//            System.out.println("}-- Boss has been created");
+//        }
 
 
 
@@ -278,7 +276,7 @@ public class updateAndDrawBulletsAndBadBoys {
            AAbullet.enableDebugMode();
        }
 
-       boss.enableDebugMode();
+       if (boss != null){boss.enableDebugMode();}
    }
 
 }

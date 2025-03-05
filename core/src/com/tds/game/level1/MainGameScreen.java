@@ -40,7 +40,9 @@ public class MainGameScreen implements Screen {
 
     private final Array<GameClasses.Gun> guns = new Array<>();
 
-    short badBoysCounter = 0;
+    public short badBoysCounter = 0;
+
+    private boolean isDebugEnabled = false;
 
     public MainGameScreen(Game game, AssetManager assetManager) {
         this.game = game;
@@ -173,8 +175,9 @@ public class MainGameScreen implements Screen {
             font.draw(batch, "For upgrade you need kill " + moreKills + " more bad boys", 128, 256); // это враньё, там просто считается сколько вышло чубриков
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.F1)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.F1) || isDebugEnabled) {
             update.enableDebugMode();
+            if(!isDebugEnabled){isDebugEnabled = true;}
         }
 
         update.updateAndDrawBullets(delta);
