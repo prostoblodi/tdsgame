@@ -20,11 +20,6 @@ import static java.lang.String.format;
 
 public class GameClasses {
 
-    public interface OnGround {
-        short getX();
-        short getY();
-    }
-
     public static class Bullet {
         private final Texture texture;
 
@@ -172,7 +167,7 @@ public class GameClasses {
         }
     }
 
-    public static class BadBoy implements OnGround {
+    public static class BadBoy {
         private final Texture texture, redHp;
         private final TextureRegion greenHp;
 
@@ -247,15 +242,10 @@ public class GameClasses {
             badBoyHpPercent = (float) badBoyHP / 100;
         }
 
-        @Override
         public short getX() {
             return x;
         }
 
-        @Override
-        public short getY(){
-            return y;
-        }
     }
 
     public static class AirBadBoy {
@@ -335,6 +325,7 @@ public class GameClasses {
         public short getX() {
             return x;
         }
+
     }
 
     public static class Gun {

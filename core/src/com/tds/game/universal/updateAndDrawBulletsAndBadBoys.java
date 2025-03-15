@@ -199,7 +199,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
     }
 
-   private void spawnBullet(float startX, float startY, GameClasses.OnGround nearest, byte damage) {
+   private void spawnBullet(float startX, float startY, GameClasses.BadBoy nearest, byte damage) {
         float targetX = nearest.getX();
         float targetY = 16; // Target Y position of bad boys
         float deltaX = targetX - startX;
