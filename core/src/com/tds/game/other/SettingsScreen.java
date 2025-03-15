@@ -92,15 +92,15 @@ public class SettingsScreen implements Screen {
         Skin skin = new Skin();
 
         skin.add("default-font", new BitmapFont());
-        skin.add("back_up", assetManager.get("backButton.png", Texture.class));
-        skin.add("back_down", assetManager.get("backButtonD.png", Texture.class));
-        skin.add("back_over", assetManager.get("backButtonO.png", Texture.class));
-        skin.add("fullscreen_up", assetManager.get("fullscreen.png", Texture.class));
-        skin.add("fullscreen_down", assetManager.get("fullscreenD.png", Texture.class));
-        skin.add("fullscreen_over", assetManager.get("fullscreenO.png", Texture.class));
-        skin.add("window_up", assetManager.get("window.png", Texture.class));
-        skin.add("window_down", assetManager.get("windowD.png", Texture.class));
-        skin.add("window_over", assetManager.get("windowO.png", Texture.class));
+        skin.add("back_up", assetManager.get("settings_buttons/back/backButton.png", Texture.class));
+        skin.add("back_down", assetManager.get("settings_buttons/back/backButtonD.png", Texture.class));
+        skin.add("back_over", assetManager.get("settings_buttons/back/backButtonO.png", Texture.class));
+        skin.add("fullscreen_up", assetManager.get("settings_buttons/fullscreen/fullscreen.png", Texture.class));
+        skin.add("fullscreen_down", assetManager.get("settings_buttons/fullscreen/fullscreenD.png", Texture.class));
+        skin.add("fullscreen_over", assetManager.get("settings_buttons/fullscreen/fullscreenO.png", Texture.class));
+        skin.add("window_up", assetManager.get("settings_buttons/window/window.png", Texture.class));
+        skin.add("window_down", assetManager.get("settings_buttons/window/windowD.png", Texture.class));
+        skin.add("window_over", assetManager.get("settings_buttons/window/windowO.png", Texture.class));
 
         return skin;
     }

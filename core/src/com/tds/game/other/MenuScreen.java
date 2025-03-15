@@ -34,15 +34,15 @@ public class MenuScreen implements Screen {
     private void createSkinAndButtons() {
         skin = new Skin();
         skin.add("default-font", new BitmapFont());
-        skin.add("playGameButton", assetManager.get("playGameButton.png", Texture.class));
-        skin.add("playGameButtonD", assetManager.get("playGameButtonD.png", Texture.class));
-        skin.add("playGameButtonO", assetManager.get("playGameButtonO.png", Texture.class));
-        skin.add("settingsButton", assetManager.get("settingsButton.png", Texture.class));
-        skin.add("settingsD", assetManager.get("settingsD.png", Texture.class));
-        skin.add("settingsO", assetManager.get("settingsO.png", Texture.class));
-        skin.add("quit", assetManager.get("quit.png", Texture.class));
-        skin.add("quitD", assetManager.get("quitD.png", Texture.class));
-        skin.add("quitO", assetManager.get("quitO.png", Texture.class));
+        skin.add("playGameButton", assetManager.get("menu_buttons/play/playGameButton.png", Texture.class));
+        skin.add("playGameButtonD", assetManager.get("menu_buttons/play/playGameButtonD.png", Texture.class));
+        skin.add("playGameButtonO", assetManager.get("menu_buttons/play/playGameButtonO.png", Texture.class));
+        skin.add("settingsButton", assetManager.get("menu_buttons/settings/settingsButton.png", Texture.class));
+        skin.add("settingsD", assetManager.get("menu_buttons/settings/settingsD.png", Texture.class));
+        skin.add("settingsO", assetManager.get("menu_buttons/settings/settingsO.png", Texture.class));
+        skin.add("quit", assetManager.get("menu_buttons/quit/quit.png", Texture.class));
+        skin.add("quitD", assetManager.get("menu_buttons/quit/quitD.png", Texture.class));
+        skin.add("quitO", assetManager.get("menu_buttons/quit/quitO.png", Texture.class));
 
         playGameButton = createButton("playGameButton", "playGameButtonD", "playGameButtonO");
         settingsButton = createButton("settingsButton", "settingsD", "settingsO");

@@ -20,7 +20,7 @@ public class updateAndDrawBulletsAndBadBoys {
 
     public short badBoysCounter;
 
-    private TextureRegion textureRegion;
+    private TextureRegion greenHp;
     private Texture airBadBoyImg, redHp, AAbltImg, bltImg, badBoysImg;
 
     long startTime = TimeUtils.nanoTime();
@@ -48,20 +48,18 @@ public class updateAndDrawBulletsAndBadBoys {
     }
 
    private void getTextures(AssetManager assetManager){
-       assetManager.load("airBadBoy.png", Texture.class);
-       assetManager.load("badBoys.png", Texture.class);
-       assetManager.load("blt.png", Texture.class);
-       assetManager.load("AAblt.png", Texture.class);
 
-       airBadBoyImg = assetManager.get("airBadBoy.png", Texture.class);
-       badBoysImg = assetManager.get("badBoys.png", Texture.class);
-       bltImg = assetManager.get("blt.png", Texture.class);
-       AAbltImg = assetManager.get("AAblt.png", Texture.class);
-       redHp = assetManager.get("redHp.png", Texture.class);
-       Texture greenHp = assetManager.get("greenHp.png", Texture.class);
+       airBadBoyImg = assetManager.get("bad_boys/airBadBoy.png", Texture.class);
+       badBoysImg = assetManager.get("bad_boys/badBoys.png", Texture.class);
 
-       textureRegion = new TextureRegion(greenHp);
-       System.out.println("}-- textures has been get");
+       bltImg = assetManager.get("bullets/blt.png", Texture.class);
+       AAbltImg = assetManager.get("bullets/AAblt.png", Texture.class);
+
+       redHp = assetManager.get("hp/redHp.png", Texture.class);
+
+       greenHp = new TextureRegion(assetManager.get("hp/greenHp.png", Texture.class));
+
+       System.out.println("}-- Textures has been get");
     }
 
    public void updateAndDrawBullets(float delta) {
@@ -156,14 +154,14 @@ public class updateAndDrawBulletsAndBadBoys {
         }
 
         if (timeSinceLastBadBoy >= respawnTime && !isBossCreated) {
-            GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
+            GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, greenHp, (short) 912, (short) 16, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
             badBoysArray.add(badBoy);
             badBoysCounter++;
 
             System.out.println("}-- " + badBoysCounter + " bad boy has been created");
 
             if(badBoysCounter >= 10 && !airBadBoyCreated){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, greenHp, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 airBadBoyCreated = true;
             }
@@ -171,7 +169,7 @@ public class updateAndDrawBulletsAndBadBoys {
         }
         else if(airBadBoyCreated && !isBossCreated){
             if(timeSinceLastAirBadBoy >= airRespawnTime){
-                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
+                GameClasses.AirBadBoy airBadBoy = new GameClasses.AirBadBoy(airBadBoyImg, redHp, greenHp, (short) 912, (short) 16, new Rectangle(912, 16, airBadBoyImg.getWidth(), airBadBoyImg.getHeight()), new Circle(912, 16, ((float) airBadBoyImg.getWidth() / 2)));
                 airBadBoys.add(airBadBoy);
                 timeSinceLastAirBadBoy = 0;
             }

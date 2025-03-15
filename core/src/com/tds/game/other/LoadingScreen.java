@@ -50,46 +50,53 @@ public class LoadingScreen implements Screen {
     }
 
     private void loadAssets() {
-        assetManager.load("end.png", Texture.class);
-        assetManager.load("gun.png", Texture.class);
-        assetManager.load("AAGun.png", Texture.class);
-        assetManager.load("2xGun.png", Texture.class);
-        assetManager.load("5xGun.png", Texture.class);
-        assetManager.load("road.png", Texture.class);
-        assetManager.load("start.png", Texture.class);
-        assetManager.load("badBoys.png", Texture.class);
-        assetManager.load("airBadBoy.png", Texture.class);
-        assetManager.load("blt.png", Texture.class);
-        assetManager.load("AAblt.png", Texture.class);
-        assetManager.load("nothing.png", Texture.class);
-        assetManager.load("nothingD.png", Texture.class);
-        assetManager.load("nothingO.png", Texture.class);
-        assetManager.load("playGameButton.png", Texture.class);
-        assetManager.load("playGameButtonD.png", Texture.class);
-        assetManager.load("playGameButtonO.png", Texture.class);
-        assetManager.load("settingsButton.png", Texture.class);
-        assetManager.load("settingsD.png", Texture.class);
-        assetManager.load("settingsO.png", Texture.class);
-        assetManager.load("quit.png", Texture.class);
-        assetManager.load("quitD.png", Texture.class);
-        assetManager.load("quitO.png", Texture.class);
-        assetManager.load("backButton.png", Texture.class);
-        assetManager.load("backButtonD.png", Texture.class);
-        assetManager.load("backButtonO.png", Texture.class);
-        assetManager.load("fullscreen.png", Texture.class);
-        assetManager.load("fullscreenD.png", Texture.class);
-        assetManager.load("fullscreenO.png", Texture.class);
-        assetManager.load("window.png", Texture.class);
-        assetManager.load("windowD.png", Texture.class);
-        assetManager.load("windowO.png", Texture.class);
-        assetManager.load("redHp.png", Texture.class);
-        assetManager.load("greenHp.png", Texture.class);
-        assetManager.load("menuButton.png", Texture.class);
-        assetManager.load("menuButtonD.png", Texture.class);
-        assetManager.load("menuButtonO.png", Texture.class);
-        assetManager.load("upgradeGun.png", Texture.class);
-        assetManager.load("upgradeGunD.png", Texture.class);
-        assetManager.load("upgradeGunO.png", Texture.class);
+        assetManager.load("menu_buttons/play/playGameButton.png", Texture.class);
+        assetManager.load("menu_buttons/play/playGameButtonD.png", Texture.class);
+        assetManager.load("menu_buttons/play/playGameButtonO.png", Texture.class);
+        assetManager.load("menu_buttons/settings/settingsButton.png", Texture.class);
+        assetManager.load("menu_buttons/settings/settingsD.png", Texture.class);
+        assetManager.load("menu_buttons/settings/settingsO.png", Texture.class);
+        assetManager.load("menu_buttons/quit/quit.png", Texture.class);
+        assetManager.load("menu_buttons/quit/quitD.png", Texture.class);
+        assetManager.load("menu_buttons/quit/quitO.png", Texture.class);
+
+        assetManager.load("settings_buttons/back/backButton.png", Texture.class);
+        assetManager.load("settings_buttons/back/backButtonD.png", Texture.class);
+        assetManager.load("settings_buttons/back/backButtonO.png", Texture.class);
+        assetManager.load("settings_buttons/fullscreen/fullscreen.png", Texture.class);
+        assetManager.load("settings_buttons/fullscreen/fullscreenD.png", Texture.class);
+        assetManager.load("settings_buttons/fullscreen/fullscreenO.png", Texture.class);
+        assetManager.load("settings_buttons/window/window.png", Texture.class);
+        assetManager.load("settings_buttons/window/windowD.png", Texture.class);
+        assetManager.load("settings_buttons/window/windowO.png", Texture.class);
+
+        assetManager.load("some_decor/end.png", Texture.class);
+        assetManager.load("some_decor/road.png", Texture.class);
+        assetManager.load("some_decor/start.png", Texture.class);
+
+        assetManager.load("guns/gun.png", Texture.class);
+        assetManager.load("guns/AAGun.png", Texture.class);
+        assetManager.load("guns/2xGun.png", Texture.class);
+        assetManager.load("guns/5xGun.png", Texture.class);
+
+        assetManager.load("bad_boys/badBoys.png", Texture.class);
+        assetManager.load("bad_boys/airBadBoy.png", Texture.class);
+
+        assetManager.load("bullets/blt.png", Texture.class);
+        assetManager.load("bullets/AAblt.png", Texture.class);
+
+        assetManager.load("hp/redHp.png", Texture.class);
+        assetManager.load("hp/greenHp.png", Texture.class);
+
+        assetManager.load("game_buttons/nothing/nothing.png", Texture.class);
+        assetManager.load("game_buttons/nothing/nothingD.png", Texture.class);
+        assetManager.load("game_buttons/nothing/nothingO.png", Texture.class);
+        assetManager.load("game_buttons/menu/menuButton.png", Texture.class);
+        assetManager.load("game_buttons/menu/menuButtonD.png", Texture.class);
+        assetManager.load("game_buttons/menu/menuButtonO.png", Texture.class);
+        assetManager.load("game_buttons/upgrade/upgradeGun.png", Texture.class);
+        assetManager.load("game_buttons/upgrade/upgradeGunD.png", Texture.class);
+        assetManager.load("game_buttons/upgrade/upgradeGunO.png", Texture.class);
     }
 
     @Override

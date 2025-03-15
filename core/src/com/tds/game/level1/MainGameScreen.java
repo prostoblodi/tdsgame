@@ -56,58 +56,27 @@ public class MainGameScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        // load end picture
-        assetManager.load("end.png", Texture.class);
-
-        // load guns pictures
-        assetManager.load("gun.png", Texture.class);
-        assetManager.load("AAGun.png", Texture.class);
-        assetManager.load("2xGun.png", Texture.class);
-
-        // load road and start(bad boys spawn) pictures
-        assetManager.load("road.png", Texture.class);
-        assetManager.load("start.png", Texture.class);
-
-        // load hp pictures
-        assetManager.load("redHp.png", Texture.class);
-        assetManager.load("greenHp.png", Texture.class);
-
-        // load menu button picture
-        assetManager.load("menuButton.png", Texture.class);
-
-        // load gun spawn button picture
-        assetManager.load("nothing.png", Texture.class);
-        assetManager.load("nothingD.png", Texture.class);
-        assetManager.load("nothingO.png", Texture.class);
-
-        // load upgrade gun button picture
-        assetManager.load("upgradeGun.png", Texture.class);
-        assetManager.load("upgradeGunD.png", Texture.class);
-        assetManager.load("upgradeGunO.png", Texture.class);
-
-        // finish loading
-        assetManager.finishLoading();
         System.out.println("}- Textures has been loaded");
 
         // save some pictures
-        endImg = assetManager.get("end.png", Texture.class);
-        roadImg = assetManager.get("road.png", Texture.class);
-        startImg = assetManager.get("start.png", Texture.class);
+        endImg = assetManager.get("some_decor/end.png", Texture.class);
+        roadImg = assetManager.get("some_decor/road.png", Texture.class);
+        startImg = assetManager.get("some_decor/start.png", Texture.class);
 
         // save gun spawn button pictures
-        Texture gunButtonUp = assetManager.get("nothing.png", Texture.class);
-        Texture gunButtonDown = assetManager.get("nothingD.png", Texture.class);
-        Texture gunButtonO = assetManager.get("nothingO.png", Texture.class);
+        Texture gunButtonUp = assetManager.get("game_buttons/nothing/nothing.png", Texture.class);
+        Texture gunButtonDown = assetManager.get("game_buttons/nothing/nothingD.png", Texture.class);
+        Texture gunButtonO = assetManager.get("game_buttons/nothing/nothingO.png", Texture.class);
 
         // save upgrade gun button pictures
-        Texture upgradeGun = assetManager.get("upgradeGun.png", Texture.class);
-        Texture upgradeGunD = assetManager.get("upgradeGunD.png", Texture.class);
-        Texture upgradeGunO = assetManager.get("upgradeGunO.png", Texture.class);
+        Texture upgradeGun = assetManager.get("game_buttons/upgrade/upgradeGun.png", Texture.class);
+        Texture upgradeGunD = assetManager.get("game_buttons/upgrade/upgradeGunD.png", Texture.class);
+        Texture upgradeGunO = assetManager.get("game_buttons/upgrade/upgradeGunO.png", Texture.class);
 
         // save menu button pictures
-        menuUp = assetManager.get("menuButton.png", Texture.class);
-        menuDown = assetManager.get("menuButtonD.png", Texture.class);
-        menuO = assetManager.get("menuButtonO.png", Texture.class);
+        menuUp = assetManager.get("game_buttons/menu/menuButton.png", Texture.class);
+        menuDown = assetManager.get("game_buttons/menu/menuButtonD.png", Texture.class);
+        menuO = assetManager.get("game_buttons/menu/menuButtonO.png", Texture.class);
 
         // create Skin
         skin = new Skin();
@@ -145,7 +114,7 @@ public class MainGameScreen implements Screen {
         short GunXCord = 128;
 
         for(byte i = 0; i < 6; i++) { // create 6 guns
-            guns.add(new GameClasses.Gun(assetManager.get("gun.png", Texture.class), assetManager.get("AAGun.png", Texture.class), assetManager.get("2xGun.png", Texture.class), assetManager.get("5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
+            guns.add(new GameClasses.Gun(assetManager.get("guns/gun.png", Texture.class), assetManager.get("guns/AAGun.png", Texture.class), assetManager.get("guns/2xGun.png", Texture.class), assetManager.get("guns/5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
             GunXCord += 128;
         }
 
