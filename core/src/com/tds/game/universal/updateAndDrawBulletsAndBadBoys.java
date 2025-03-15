@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.tds.game.otherLevels.AfterBossScreen;
 import com.tds.game.other.MenuScreen;
 
 import java.util.Iterator;
@@ -36,8 +35,6 @@ public class updateAndDrawBulletsAndBadBoys {
     private final Array<GameClasses.AirBadBoy> airBadBoys = new Array<>();
     private final Array<GameClasses.Gun> guns;
 
-    GameClasses.Boss boss = null;
-
     Game game;
     AssetManager assetManager;
 
@@ -55,7 +52,6 @@ public class updateAndDrawBulletsAndBadBoys {
        assetManager.load("badBoys.png", Texture.class);
        assetManager.load("blt.png", Texture.class);
        assetManager.load("AAblt.png", Texture.class);
-       assetManager.load("Destroyer.png", Texture.class);
 
        airBadBoyImg = assetManager.get("airBadBoy.png", Texture.class);
        badBoysImg = assetManager.get("badBoys.png", Texture.class);
@@ -159,14 +155,6 @@ public class updateAndDrawBulletsAndBadBoys {
             }
         }
 
-        if(boss != null){
-            if(boss.x <= 16){
-                System.out.println("}-- Boss is in the end");
-                game.setScreen(new AfterBossScreen(game, assetManager, false, badBoysCounter));
-                return;
-            }
-        }
-
         if (timeSinceLastBadBoy >= respawnTime && !isBossCreated) {
             GameClasses.BadBoy badBoy = new GameClasses.BadBoy(badBoysImg, redHp, textureRegion, (short) 912, (short) 16, new Rectangle(912, 16, badBoysImg.getWidth(), badBoysImg.getHeight()), new Circle(912, 16, (float) badBoysImg.getWidth() / 2));
             badBoysArray.add(badBoy);
@@ -189,13 +177,6 @@ public class updateAndDrawBulletsAndBadBoys {
             }
         }
 
-//        if(badBoysCounter >= 25 && !isBossCreated){
-//            boss = new GameClasses.Boss(assetManager.get("Destroyer.png", Texture.class), (short) 912, (short) 16);
-//            isBossCreated = true;
-//            System.out.println("}-- Boss has been created");
-//        }
-
-
 
         Iterator<GameClasses.BadBoy> iter = badBoysArray.iterator();
         while (iter.hasNext()) {
@@ -216,11 +197,6 @@ public class updateAndDrawBulletsAndBadBoys {
                 iter2.remove();
             }
         }
-
-        if(boss != null) {
-            boss.update();
-            boss.draw(batch);
-        }
     }
 
    private void spawnBullet(float startX, float startY, GameClasses.OnGround nearest, byte damage) {
@@ -233,7 +209,7 @@ public class updateAndDrawBulletsAndBadBoys {
         float speedX = deltaX / distance * speed;
         float speedY = deltaY / distance * speed;
 
-        bullets.add(new GameClasses.Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, damage, boss));
+        bullets.add(new GameClasses.Bullet(bltImg, startX, startY, speedX, speedY, badBoysArray, damage));
 
     }
 
@@ -275,8 +251,6 @@ public class updateAndDrawBulletsAndBadBoys {
        for(GameClasses.AABullet AAbullet: AAbullets){
            AAbullet.enableDebugMode();
        }
-
-       if (boss != null){boss.enableDebugMode();}
    }
 
 }

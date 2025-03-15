@@ -118,8 +118,8 @@ public class SettingsScreen implements Screen {
         else {
             backButton.setPosition(0, 850);
         }
-        windowButton.setPosition(438, 540);
-        fullscreenButton.setPosition(960, 540);
+        windowButton.setPosition(200, 540);
+        fullscreenButton.setPosition(1057, 540);
     }
 
     @Override

@@ -38,11 +38,10 @@ public class GameClasses {
         private boolean debugMode = false;
 
         private final Array<BadBoy> badBoysArray;
-        private final Boss boss;
 
         private final byte damage;
 
-        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage, Boss boss) {
+        public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage) {
             this.texture = texture;
 
             this.x = startX;
@@ -56,7 +55,6 @@ public class GameClasses {
             font.setColor(Color.BLACK);
 
             this.badBoysArray = badBoysArray;
-            this.boss = boss;
 
             this.damage = damage;
         }
@@ -72,11 +70,6 @@ public class GameClasses {
                     badBoys.takeDamage(damage);
                     active = false;
                     break;
-                }
-            }
-            if(boss != null){
-                if (Intersector.overlaps(hitBox, boss.recHitBox)) {
-                    active = false;
                 }
             }
 
@@ -344,57 +337,6 @@ public class GameClasses {
         }
     }
 
-    public static class Boss implements OnGround{
-
-        Texture texture;
-
-        short x, y;
-
-        public Circle cirHitBox;
-        public Rectangle recHitBox;
-        private final BitmapFont font = new BitmapFont();
-
-        private boolean debugMode = false;
-
-        public Boss(Texture texture, short x, short y){
-            this.texture = texture;
-
-            this.x = x;
-            this.y = y;
-
-            this.cirHitBox = new Circle(912, 16, 64);
-            this.recHitBox = new Rectangle(912, 16, 128, 128);
-        }
-
-        public void draw(Batch batch){
-            batch.draw(texture, x, y);
-
-            if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s", x, y), x + 5,y + 70);
-            }
-        }
-
-        public void update(){
-            x--;
-            cirHitBox.x--;
-            recHitBox.x--;
-        }
-
-        public void enableDebugMode(){
-            this.debugMode = true;
-        }
-
-        @Override
-        public short getX() {
-            return x;
-        }
-
-        @Override
-        public short getY() {
-            return y;
-        }
-    }
-
     public static class Gun {
 
         private final Texture gunTexture, gun2Texture, gun3Texture, gun4Texture;
@@ -422,7 +364,7 @@ public class GameClasses {
             button.setSize(128, 128);
 
             TextButton button2 = new TextButton("", buttonSkin, "updatedGunStyle");
-            button2.setPosition(x+32,y+128);
+            button2.setPosition(x+16,y+128);
             button2.setSize(96, 96);
 
             this.button2 = button2;

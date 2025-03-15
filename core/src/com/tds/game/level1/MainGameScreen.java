@@ -138,7 +138,7 @@ public class MainGameScreen implements Screen {
 
     private void setupInitialState() { // Base state of some variables
         font = new BitmapFont();
-        font.setColor(Color.BLACK);
+        font.setColor(Color.WHITE);
 
         update = new updateAndDrawBulletsAndBadBoys(batch, guns, game, assetManager, badBoysCounter);
 
@@ -157,9 +157,6 @@ public class MainGameScreen implements Screen {
     public void render(float delta) {
         badBoysCounter = update.badBoysCounter;
 
-        byte moreKills = (byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0);
-        boolean show = moreKills != 0;
-
         ScreenUtils.clear(0, 0, 0, 1);
         stage.act(delta);
         stage.draw();
@@ -171,8 +168,8 @@ public class MainGameScreen implements Screen {
         batch.begin();
         drawTextures();
 
-        if(show) {
-            font.draw(batch, "For upgrade you need kill " + moreKills + " more bad boys", 128, 256); // это враньё, там просто считается сколько вышло чубриков
+        if((byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0) != 0) {
+            font.draw(batch, "For upgrade you need kill " + (byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0) + " more bad boys", 128, 276); // это враньё, там просто считается сколько вышло чубриков
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.F1) || isDebugEnabled) {
