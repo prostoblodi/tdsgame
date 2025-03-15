@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
-import static java.lang.String.format;
 
 public class GameClasses {
 
@@ -77,7 +76,7 @@ public class GameClasses {
             if (active) {
                 batch.draw(texture, x, y);
                 if (debugMode){
-                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), x+5,y+70);
+                    font.draw(batch, ("X: " + x + '\n' + "Y: " + y + '\n' + "SpX: " + speedX + "SpY: " + speedY), x+5,y+70);
                 }
             }
         }
@@ -149,7 +148,7 @@ public class GameClasses {
             if (active) {
                 batch.draw(texture, x, y);
                 if (debugMode){
-                    font.draw(batch, format("X: %f\nY: %f\nSpX: %f\nSpY: %f", x, y, speedX, speedY), 0,0);
+                    font.draw(batch, ("X: " + x + '\n' + "Y: " + y + '\n' + "SpX: " + speedX + "SpY: " + speedY), 0, 0);
                 }
             }
         }
@@ -217,7 +216,7 @@ public class GameClasses {
             batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
 
             if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s\nHP: %s\nHPP: %f", x, y, badBoyHP, badBoyHpPercent), x + 1,y + 70);
+                font.draw(batch, ("X: " + x + '\n' + "Y: " + y + '\n' + "HP: " + badBoyHP + '\n' + "HPP: " + badBoyHpPercent), x + 1,y + 70);
             }
         }
 
@@ -297,7 +296,7 @@ public class GameClasses {
             batch.draw(greenHp, x - 44, y + 96, greenHp.getRegionWidth(), greenHp.getRegionHeight());
 
             if (debugMode){
-                font.draw(batch, format("X: %s\nY: %s\nHP: %b\nHPP: %f", x, y, AirBadBoyHP, AirBadBoyHpPercent), x + 5,y + 70);
+                font.draw(batch, ("X: " + x + '\n' + "Y: " + y + '\n' + "HP: " + AirBadBoyHP + '\n' + "HPP: " + AirBadBoyHpPercent), x + 5,y + 70);
             }
         }
 
