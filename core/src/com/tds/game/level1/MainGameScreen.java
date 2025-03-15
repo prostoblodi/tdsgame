@@ -4,18 +4,15 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -25,133 +22,178 @@ import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
 
 public class MainGameScreen implements Screen {
 
-    private updateAndDrawBulletsAndBadBoys update; // Function that update bad boys and bullets
+    // Handles updating and drawing bullets and bad boys (enemies)
+    private updateAndDrawBulletsAndBadBoys update;
 
-    private final Game game; // Main game variable, makes it possible to open different windows
-    private final AssetManager assetManager; // Just an asset manager(textures, etc.)
-    private SpriteBatch batch; // Variable that is needed for rendering textures
-    private Stage stage; // Variable that is needed to render buttons
-    public Skin skin; // A variable that assigns objects their textures
+    // Main game variable to switch between screens
+    private final Game game;
 
-    private Texture endImg, roadImg, startImg, menuUp, menuDown, menuO; // Textures
-    private BitmapFont font; // Text
+    // Asset manager for loading and accessing textures and other assets
+    private final AssetManager assetManager;
 
+    // Used for rendering textures
+    private SpriteBatch batch;
+
+    // Stage for rendering UI elements like buttons
+    private Stage stage;
+
+    // Skin for styling UI elements
+    public Skin skin;
+
+    // Textures for different UI elements and backgrounds
+    private Texture endImg, roadImg, startImg, menuUp, menuDown, menuO;
+
+    // BitmapFont for rendering text
+    private BitmapFont font;
+
+    // Style for the menu button
     private final TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
 
+    // Array to store guns (game objects)
     private final Array<GameClasses.Gun> guns = new Array<>();
 
+    // Counter for bad boys (enemies) killed
     public short badBoysCounter = 0;
 
+    // Debug mode toggle
     private boolean isDebugEnabled = false;
 
+    // Constructor to initialize the game screen with required variables
     public MainGameScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
     }
 
     @Override
-    public void show() { // Load all textures
+    public void show() { // Load all textures and initialize objects
         this.batch = new SpriteBatch();
         this.stage = new Stage(new ScreenViewport());
 
+        // Set the input processor for handling UI input events
         Gdx.input.setInputProcessor(stage);
 
-        System.out.println("}- Textures has been loaded");
+        System.out.println("}- Textures have been loaded");
 
-        // save some pictures
+        // Load background textures
         endImg = assetManager.get("some_decor/end.png", Texture.class);
         roadImg = assetManager.get("some_decor/road.png", Texture.class);
         startImg = assetManager.get("some_decor/start.png", Texture.class);
 
-        // save gun spawn button pictures
+        // Load gun spawn button textures
         Texture gunButtonUp = assetManager.get("game_buttons/nothing/nothing.png", Texture.class);
         Texture gunButtonDown = assetManager.get("game_buttons/nothing/nothingD.png", Texture.class);
         Texture gunButtonO = assetManager.get("game_buttons/nothing/nothingO.png", Texture.class);
 
-        // save upgrade gun button pictures
+        // Load upgrade gun button textures
         Texture upgradeGun = assetManager.get("game_buttons/upgrade/upgradeGun.png", Texture.class);
         Texture upgradeGunD = assetManager.get("game_buttons/upgrade/upgradeGunD.png", Texture.class);
         Texture upgradeGunO = assetManager.get("game_buttons/upgrade/upgradeGunO.png", Texture.class);
 
-        // save menu button pictures
+        // Load menu button textures
         menuUp = assetManager.get("game_buttons/menu/menuButton.png", Texture.class);
         menuDown = assetManager.get("game_buttons/menu/menuButtonD.png", Texture.class);
         menuO = assetManager.get("game_buttons/menu/menuButtonO.png", Texture.class);
 
-        // create Skin
+        // Create a new skin and set up fonts
         skin = new Skin();
         skin.add("default-font", new BitmapFont());
 
-        // create gun spawn button style
+        // Create style for gun spawn buttons
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.up = new TextureRegionDrawable(new TextureRegion(gunButtonUp));
         buttonStyle.down = new TextureRegionDrawable(new TextureRegion(gunButtonDown));
         buttonStyle.over = new TextureRegionDrawable(new TextureRegion(gunButtonO));
         buttonStyle.font = skin.getFont("default-font");
 
-        // create upgrade gun button style
+        // Create style for upgrade gun buttons
         TextButton.TextButtonStyle button2Style = new TextButton.TextButtonStyle();
         button2Style.up = new TextureRegionDrawable(new TextureRegion(upgradeGun));
         button2Style.down = new TextureRegionDrawable(new TextureRegion(upgradeGunD));
         button2Style.over = new TextureRegionDrawable(new TextureRegion(upgradeGunO));
         button2Style.font = skin.getFont("default-font");
 
-        // add buttons styles at skin
+        // Add button styles to the skin
         skin.add("gunButtonStyle", buttonStyle);
         skin.add("updatedGunStyle", button2Style);
 
-        System.out.println("}- Textures has been get");
+        System.out.println("}- Textures have been retrieved");
 
         setupInitialState();
     }
 
-    private void setupInitialState() { // Base state of some variables
+    // Set up the initial state of variables and objects
+    private void setupInitialState() {
         font = new BitmapFont();
         font.setColor(Color.WHITE);
 
+        // Initialize the update logic
         update = new updateAndDrawBulletsAndBadBoys(batch, guns, game, assetManager, badBoysCounter);
 
+        // Define initial x-coordinate for guns
         short GunXCord = 128;
 
-        for(byte i = 0; i < 6; i++) { // create 6 guns
-            guns.add(new GameClasses.Gun(assetManager.get("guns/gun.png", Texture.class), assetManager.get("guns/AAGun.png", Texture.class), assetManager.get("guns/2xGun.png", Texture.class), assetManager.get("guns/5xGun.png", Texture.class), skin, GunXCord, (short) 128, stage));
+        // Create 6 guns and add them to the guns array
+        for (byte i = 0; i < 6; i++) {
+            guns.add(new GameClasses.Gun(
+                    assetManager.get("guns/gun.png", Texture.class),
+                    assetManager.get("guns/AAGun.png", Texture.class),
+                    assetManager.get("guns/2xGun.png", Texture.class),
+                    assetManager.get("guns/5xGun.png", Texture.class),
+                    skin,
+                    GunXCord,
+                    (short) 128,
+                    stage
+            ));
             GunXCord += 128;
         }
 
-        System.out.println("}- SetupInitialStated");
+        System.out.println("}- SetupInitialState completed");
         createButtons();
     }
 
     @Override
     public void render(float delta) {
+        // Update the bad boys counter from the update logic
         badBoysCounter = update.badBoysCounter;
 
+        // Clear the screen with black color
         ScreenUtils.clear(0, 0, 0, 1);
+
+        // Update and draw the stage (UI elements)
         stage.act(delta);
         stage.draw();
 
+        // Draw guns
         for (GameClasses.Gun gun : guns) {
-            gun.draw(batch,stage,delta,badBoysCounter);
+            gun.draw(batch, stage, delta, badBoysCounter);
         }
 
+        // Begin rendering batch for non-UI elements
         batch.begin();
+
         drawTextures();
 
-        if((byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0) != 0) {
-            font.draw(batch, "For upgrade you need kill " + (byte) ((badBoysCounter - 5) <= 0 ? (5-badBoysCounter) : 0) + " more bad boys", 128, 276); // это враньё, там просто считается сколько вышло чубриков
+        // Display the number of bad boys required for upgrade
+        if ((byte) ((badBoysCounter - 5) <= 0 ? (5 - badBoysCounter) : 0) != 0) {
+            font.draw(batch, "For upgrade you need to kill " + (byte) ((badBoysCounter - 5) <= 0 ? (5 - badBoysCounter) : 0) + " more bad boys", 128, 276);
         }
 
+        // Toggle debug mode
         if (Gdx.input.isKeyPressed(Input.Keys.F1) || isDebugEnabled) {
             update.enableDebugMode();
-            if(!isDebugEnabled){isDebugEnabled = true;}
+            if (!isDebugEnabled) {
+                isDebugEnabled = true;
+            }
         }
 
+        // Update and draw bullets and bad boys
         update.updateAndDrawBullets(delta);
         update.updateAndDrawBadBoys(delta);
 
         batch.end();
     }
 
+    // Draw static textures like roads and the start/end points
     private void drawTextures() {
         for (int i = 0; i < 6; i++) {
             batch.draw(roadImg, 128 + i * 128, 0);
@@ -160,7 +202,8 @@ public class MainGameScreen implements Screen {
         batch.draw(endImg, 0, 0);
     }
 
-    public void createButtons(){
+    // Create menu button and set its properties
+    public void createButtons() {
         short y = (short) (!Gdx.graphics.isFullscreen() ? 860 : 920);
 
         menuStyle.up = new TextureRegionDrawable(new TextureRegion(menuUp));
@@ -172,12 +215,12 @@ public class MainGameScreen implements Screen {
 
         TextButton menuButton = new TextButton("", menuStyle);
 
-        menuButton.setPosition(0,y);
+        menuButton.setPosition(0, y);
         menuButton.setSize(160, 160);
 
         stage.addActor(menuButton);
 
-
+        // Add a click listener to the menu button to switch screens
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -185,7 +228,7 @@ public class MainGameScreen implements Screen {
             }
         });
 
-        System.out.println("}- Buttons has been created");
+        System.out.println("}- Buttons have been created");
     }
 
     @Override
@@ -204,12 +247,14 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void dispose() {
+        // Dispose of all resources
         batch.dispose();
         font.dispose();
         disposeTextures();
         stage.dispose();
     }
 
+    // Dispose of textures to free memory
     private void disposeTextures() {
         endImg.dispose();
         roadImg.dispose();

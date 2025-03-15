@@ -15,41 +15,44 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class LoadingScreen implements Screen {
-    private final Game game;
-    private final AssetManager assetManager;
-    private final Stage stage;
-    private final Skin skin;
-    private final Label loadingLabel;
+    private final Game game;  // The game instance to switch between screens
+    private final AssetManager assetManager;  // Asset manager to load assets
+    private final Stage stage;  // Stage to manage the scene and actors
+    private final Skin skin;  // Skin to style UI components
+    private final Label loadingLabel;  // Label to show loading progress
 
     public LoadingScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
-        this.stage = new Stage(new ScreenViewport());
+        this.stage = new Stage(new ScreenViewport());  // Create a new stage with a screen viewport
 
-        this.skin = createSkin();
-        this.loadingLabel = createLoadingLabel();
+        this.skin = createSkin();  // Create the skin to apply styles
+        this.loadingLabel = createLoadingLabel();  // Create the loading label
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.add(loadingLabel).center();
-        stage.addActor(table);
+        Table table = new Table();  // Create a table to center the loading label
+        table.setFillParent(true);  // Fill the entire stage with the table
+        table.add(loadingLabel).center();  // Add the label to the table and center it
+        stage.addActor(table);  // Add the table to the stage
 
-        loadAssets();
+        loadAssets();  // Begin loading assets asynchronously
     }
 
     private Skin createSkin() {
+        // Create and return a new skin with a default font
         Skin skin = new Skin();
         skin.add("default-font", new BitmapFont());
         return skin;
     }
 
     private Label createLoadingLabel() {
+        // Create a label to show the "Loading..." text
         LabelStyle labelStyle = new LabelStyle();
         labelStyle.font = skin.getFont("default-font");
         return new Label("Loading...", labelStyle);
     }
 
     private void loadAssets() {
+        // Load all the assets needed for the game
         assetManager.load("menu_buttons/play/playGameButton.png", Texture.class);
         assetManager.load("menu_buttons/play/playGameButtonD.png", Texture.class);
         assetManager.load("menu_buttons/play/playGameButtonO.png", Texture.class);
@@ -60,6 +63,7 @@ public class LoadingScreen implements Screen {
         assetManager.load("menu_buttons/quit/quitD.png", Texture.class);
         assetManager.load("menu_buttons/quit/quitO.png", Texture.class);
 
+        // Additional assets (settings buttons, decorations, guns, etc.)
         assetManager.load("settings_buttons/back/backButton.png", Texture.class);
         assetManager.load("settings_buttons/back/backButtonD.png", Texture.class);
         assetManager.load("settings_buttons/back/backButtonO.png", Texture.class);
@@ -101,25 +105,28 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(stage);  // Set the input processor when the screen is shown
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
-        stage.draw();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);  // Clear the screen
+
+        stage.act(delta);  // Update the stage (process actors and events)
+        stage.draw();  // Draw the stage and all its actors
 
         if (assetManager.update()) {
+            // If the assets are loaded, switch to the MenuScreen
             game.setScreen(new MenuScreen(game, assetManager));
         } else {
+            // If the assets are still loading, update the loading label with progress
             loadingLabel.setText("Loading... " + (int) (assetManager.getProgress() * 100) + "%");
         }
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);  // Update the viewport when the window is resized
     }
 
     @Override
@@ -133,7 +140,7 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
-        skin.dispose();
+        stage.dispose();  // Dispose of the stage to free resources
+        skin.dispose();  // Dispose of the skin to free resources
     }
 }
