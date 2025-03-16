@@ -7,8 +7,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -21,11 +23,21 @@ public class MenuScreen implements Screen {
     private final Stage stage;  // Stage to manage the scene and actors
     private TextButton playGameButton, settingsButton, quitButton;  // Buttons for user interaction
     private Skin skin;  // Skin to style the buttons
+    private final Label label;
 
     public MenuScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
         this.stage = new Stage(new ScreenViewport());  // Create a new stage with a screen viewport
+
+        // Create a label to show the "Loading..." text
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 160;
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        labelStyle.font = generator.generateFont(parameter);
+        label = new Label("TDS game", labelStyle);
 
         createSkinAndButtons();  // Create and style the buttons
         setupStage();  // Set up button positions and add them to the stage
@@ -86,17 +98,20 @@ public class MenuScreen implements Screen {
 
     private void setupStage() {
         // Set button positions and sizes
-        playGameButton.setPosition(624, 631);
+        playGameButton.setPosition(624, 561);
         playGameButton.setSize(673, 134);
         stage.addActor(playGameButton);
 
-        settingsButton.setPosition(624, 473);
+        settingsButton.setPosition(624, 403);
         settingsButton.setSize(673, 134);
         stage.addActor(settingsButton);
 
-        quitButton.setPosition(624, 315);
+        quitButton.setPosition(624, 245);
         quitButton.setSize(673, 134);
         stage.addActor(quitButton);
+
+        label.setPosition(510, 720);
+        stage.addActor(label);
 
         // Set the input processor to the stage to handle touch inputs
         Gdx.input.setInputProcessor(stage);
