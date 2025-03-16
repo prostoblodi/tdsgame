@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,7 +20,7 @@ public class LoadingScreen implements Screen {
     private final AssetManager assetManager;  // Asset manager to load assets
     private final Stage stage;  // Stage to manage the scene and actors
     private final Skin skin;  // Skin to style UI components
-    private final Label loadingLabel;  // Label to show loading progress
+    private final Label loadingLabel;
 
     public LoadingScreen(Game game, AssetManager assetManager) {
         this.game = game;
@@ -47,7 +48,11 @@ public class LoadingScreen implements Screen {
     private Label createLoadingLabel() {
         // Create a label to show the "Loading..." text
         LabelStyle labelStyle = new LabelStyle();
-        labelStyle.font = skin.getFont("default-font");
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 60;
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        labelStyle.font = generator.generateFont(parameter);
         return new Label("Loading...", labelStyle);
     }
 

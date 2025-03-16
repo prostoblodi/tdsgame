@@ -128,8 +128,8 @@ public class SettingsScreen implements Screen {
         else {
             backButton.setPosition(0, 850);  // Set position for windowed mode
         }
-        windowButton.setPosition(200, 540);  // Position window button
-        fullscreenButton.setPosition(1057, 540);  // Position fullscreen button
+        windowButton.setPosition(200, 480);  // Position window button
+        fullscreenButton.setPosition(1057, 480);  // Position fullscreen button
     }
 
     @Override

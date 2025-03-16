@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tds.game.universal.GameClasses;
 import com.tds.game.other.MenuScreen;
 import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
+
 
 public class MainGameScreen implements Screen {
 
@@ -123,8 +125,13 @@ public class MainGameScreen implements Screen {
 
     // Set up the initial state of variables and objects
     private void setupInitialState() {
-        font = new BitmapFont();
-        font.setColor(Color.WHITE);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 20;
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+
+        font = generator.generateFont(parameter);
 
         // Initialize the update logic
         update = new updateAndDrawBulletsAndBadBoys(batch, guns, game, assetManager, badBoysCounter);
