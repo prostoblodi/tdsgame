@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.tds.game.managers.SettingsManager;
 
 public class LoadingScreen implements Screen {
     private final Game game;  // The game instance to switch between screens
@@ -21,11 +22,16 @@ public class LoadingScreen implements Screen {
     private final Stage stage;  // Stage to manage the scene and actors
     private final Skin skin;  // Skin to style UI components
     private final Label loadingLabel;
+    private FreeTypeFontGenerator generator;
 
     public LoadingScreen(Game game, AssetManager assetManager) {
+        SettingsManager settingsManager = new SettingsManager();
+        settingsManager.enableOrNotFullscreen(false);
+
         this.game = game;
         this.assetManager = assetManager;
         this.stage = new Stage(new ScreenViewport());  // Create a new stage with a screen viewport
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);  // Update the viewport when the window is resized
 
         this.skin = createSkin();  // Create the skin to apply styles
         this.loadingLabel = createLoadingLabel();  // Create the loading label
@@ -34,6 +40,7 @@ public class LoadingScreen implements Screen {
         table.setFillParent(true);  // Fill the entire stage with the table
         table.add(loadingLabel).center();  // Add the label to the table and center it
         stage.addActor(table);  // Add the table to the stage
+
 
         loadAssets();  // Begin loading assets asynchronously
     }
@@ -48,7 +55,7 @@ public class LoadingScreen implements Screen {
     private Label createLoadingLabel() {
         // Create a label to show the "Loading..." text
         LabelStyle labelStyle = new LabelStyle();
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 60;
         parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
@@ -147,5 +154,6 @@ public class LoadingScreen implements Screen {
     public void dispose() {
         stage.dispose();  // Dispose of the stage to free resources
         skin.dispose();  // Dispose of the skin to free resources
+        generator.dispose();  // Dispose of the font generator to free resources
     }
 }

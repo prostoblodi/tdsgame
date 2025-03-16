@@ -1,7 +1,6 @@
 package com.tds.game.other;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.tds.game.managers.SettingsManager;
 
 public class SettingsScreen implements Screen {
     private final Game game;  // The game instance to switch between screens
@@ -21,6 +21,8 @@ public class SettingsScreen implements Screen {
     private boolean isFullscreen = false;  // Flag to check if fullscreen is enabled
     private final boolean isAndroid;  // Flag to check if the app is running on Android
 
+    SettingsManager settingsManager = new SettingsManager();
+
     public SettingsScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
@@ -28,14 +30,6 @@ public class SettingsScreen implements Screen {
         this.isAndroid = Gdx.app.getType() == Application.ApplicationType.Android;  // Check if it's Android
 
         createButtons();  // Create the UI buttons
-
-        // Check and set the screen mode based on the current graphics settings
-        if (Gdx.graphics.isFullscreen()) {
-            setFullscreen();  // Set fullscreen mode if already enabled
-        }
-        else {
-            setWindowed();  // Set windowed mode if fullscreen is not enabled
-        }
     }
 
     private void createButtons() {
@@ -87,6 +81,7 @@ public class SettingsScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setWindowed();  // Set the screen to windowed mode when clicked
+                settingsManager.saveSettings(false);
             }
         });
 
@@ -140,19 +135,14 @@ public class SettingsScreen implements Screen {
     }
 
     private void setFullscreen() {
-        // Set fullscreen mode if not already in fullscreen
-        if (!isFullscreen) {
-            Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();  // Get current display mode
-            Gdx.graphics.setFullscreenMode(currentMode);  // Set the screen to fullscreen
-            isFullscreen = true;  // Set the fullscreen flag
-            adjustButtonPositions();  // Adjust button positions after changing mode
-        }
+        settingsManager.setFullscreen();
+        isFullscreen = true;  // Set the fullscreen flag
+        adjustButtonPositions();  // Adjust button positions after changing mode
     }
 
     private void setWindowed() {
-        // Set windowed mode if in fullscreen mode
-        if (isFullscreen) {
-            Gdx.graphics.setWindowedMode(1920, 1010);  // Set the screen to windowed mode with specific resolution
+        if(isFullscreen) {
+            settingsManager.setWindowed(true);
             isFullscreen = false;  // Reset the fullscreen flag
             adjustButtonPositions();  // Adjust button positions after changing mode
         }
