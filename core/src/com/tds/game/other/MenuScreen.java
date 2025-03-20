@@ -18,11 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tds.game.level1.MainGameScreen;
 
 public class MenuScreen implements Screen {
-    private final Game game;  // The game instance to switch between screens
-    private final AssetManager assetManager;  // Asset manager to load assets
-    private final Stage stage;  // Stage to manage the scene and actors
-    private TextButton playGameButton, settingsButton, quitButton;  // Buttons for user interaction
-    private Skin skin;  // Skin to style the buttons
+    /** The game instance to switch between screens */
+    private final Game game;
+    /** Asset manager(load, get assets) */
+    private final AssetManager assetManager;
+    /** Manages scenes and actors */
+    private final Stage stage;
+    private TextButton playGameButton, settingsButton, quitButton;
+    /** Style the buttons */
+    private Skin skin;
     private final Label label;
 
     public MenuScreen(Game game, AssetManager assetManager) {
@@ -30,7 +34,7 @@ public class MenuScreen implements Screen {
         this.assetManager = assetManager;
         this.stage = new Stage(new ScreenViewport());  // Create a new stage with a screen viewport
 
-        // Create a label to show the "Loading..." text
+        // Loading text
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -39,8 +43,8 @@ public class MenuScreen implements Screen {
         labelStyle.font = generator.generateFont(parameter);
         label = new Label("TDS game", labelStyle);
 
-        createSkinAndButtons();  // Create and style the buttons
-        setupStage();  // Set up button positions and add them to the stage
+        createSkinAndButtons();
+        setupStage();
     }
 
     private void createSkinAndButtons() {
@@ -86,14 +90,13 @@ public class MenuScreen implements Screen {
     }
 
     private TextButton createButton(String up, String down, String over) {
-        // Create a new button style with up, down, and over textures
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = skin.getFont("default-font");  // Set the font
-        style.up = skin.getDrawable(up);  // Set the "up" texture for the button
-        style.down = skin.getDrawable(down);  // Set the "down" texture for the button
-        style.over = skin.getDrawable(over);  // Set the "over" texture for the button
+        style.font = skin.getFont("default-font");
+        style.up = skin.getDrawable(up);
+        style.down = skin.getDrawable(down);
+        style.over = skin.getDrawable(over);
 
-        return new TextButton("", style);  // Return a new button with the created style
+        return new TextButton("", style);
     }
 
     private void setupStage() {

@@ -24,50 +24,50 @@ import com.tds.game.universal.updateAndDrawBulletsAndBadBoys;
 
 public class MainGameScreen implements Screen {
 
-    // Handles updating and drawing bullets and bad boys (enemies)
+    /** Handles updating and drawing bullets and bad boys (enemies) */
     private updateAndDrawBulletsAndBadBoys update;
 
-    // Main game variable to switch between screens
+    /** Main game variable to switch between screens */
     private final Game game;
 
-    // Asset manager for loading and accessing textures and other assets
+    /** Asset manager for loading and accessing textures and other assets */
     private final AssetManager assetManager;
 
-    // Used for rendering textures
+    /** Used for rendering textures */
     private SpriteBatch batch;
 
-    // Stage for rendering UI elements like buttons
+    /** Stage for rendering UI elements like buttons */
     private Stage stage;
 
-    // Skin for styling UI elements
+    /** Skin for styling UI elements */
     public Skin skin;
 
-    // Textures for different UI elements and backgrounds
+    /** Textures for different UI elements and backgrounds */
     private Texture endImg, roadImg, startImg, menuUp, menuDown, menuO;
 
-    // BitmapFont for rendering text
+    /** BitmapFont for rendering text */
     private BitmapFont font;
 
-    // Style for the menu button
+    /** Style for the menu button */
     private final TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
 
-    // Array to store guns (game objects)
+    /** Array to store guns */
     private final Array<GameClasses.Gun> guns = new Array<>();
 
-    // Counter for bad boys (enemies) killed
+    /** Counter for bad boys (enemies) killed */
     public short badBoysCounter = 0;
 
-    // Debug mode toggle
+    /** Is debug mode enabled */
     private boolean isDebugEnabled = false;
 
-    // Constructor to initialize the game screen with required variables
     public MainGameScreen(Game game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
     }
 
+    // Load textures and initialize buttons
     @Override
-    public void show() { // Load all textures and initialize objects
+    public void show() {
         this.batch = new SpriteBatch();
         this.stage = new Stage(new ScreenViewport());
 
@@ -257,14 +257,9 @@ public class MainGameScreen implements Screen {
         // Dispose of all resources
         batch.dispose();
         font.dispose();
-        disposeTextures();
-        stage.dispose();
-    }
-
-    // Dispose of textures to free memory
-    private void disposeTextures() {
         endImg.dispose();
         roadImg.dispose();
         startImg.dispose();
+        stage.dispose();
     }
 }

@@ -17,7 +17,7 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
 
-    version = 'v1.1a'
+    version = 'v1.2a'
     ext {
         appName = "Tower Defence Simulator"
         gdxVersion = '1.13.1'

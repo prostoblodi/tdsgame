@@ -17,10 +17,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tds.game.managers.SettingsManager;
 
 public class LoadingScreen implements Screen {
-    private final Game game;  // The game instance to switch between screens
-    private final AssetManager assetManager;  // Asset manager to load assets
-    private final Stage stage;  // Stage to manage the scene and actors
-    private final Skin skin;  // Skin to style UI components
+    /** The game instance to switch between screens */
+    private final Game game;
+    /** Asset manager(load, get assets) */
+    private final AssetManager assetManager;
+    /** Manages scenes and actors */
+    private final Stage stage;
+    /** Style */
+    private final Skin skin;
     private final Label loadingLabel;
     private FreeTypeFontGenerator generator;
 

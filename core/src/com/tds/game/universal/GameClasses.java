@@ -18,12 +18,15 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameClasses {
 
-    // Represents a bullet fired by the player
+
     public static class Bullet {
-        private final Texture texture; // Texture of the bullet
+        /** Bullet, that are created by guns, and only hit ground enemies.
+         *
+         */
+        private final Texture texture;
 
         private float x, y; // Current position of the bullet
-        private final float speedX, speedY; // Speed of the bullet in both axes
+        private final float speedX, speedY;
 
         private final Rectangle hitBox; // Rectangle hitbox for collision detection
         private final BitmapFont font = new BitmapFont(); // Font for debug information
@@ -31,10 +34,21 @@ public class GameClasses {
         private boolean active = true; // Whether the bullet is active
         private boolean debugMode = false; // Whether debug mode is enabled
 
-        private final Array<BadBoy> badBoysArray; // Array of enemy units to check for collisions
+        private final Array<BadBoy> badBoysArray;
 
-        private final byte damage; // Damage the bullet deals
+        private final byte damage;
 
+
+        /**
+         * Constructor of bullet, that are created by guns, and only hit ground enemies.
+         * @param startX The x-coordinate, where the bullet should appear.
+         * @param startY The y-coordinate, where the bullet should appear.
+         * @param speedX The velocity, at which the bullet will fly along the coordinate x.
+         * @param speedY The velocity, at which the bullet will fly along the coordinate y.
+         * @param damage The damage, a bullet will do when it comes in contact with an enemy.
+         * @param texture Bullet texture.
+         * @param badBoysArray List of enemies, that the bullet can shoot at.
+         */
         public Bullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<BadBoy> badBoysArray, Byte damage) {
             this.texture = texture;
 
@@ -98,12 +112,14 @@ public class GameClasses {
         }
     }
 
-    // Represents a bullet for air targets
     public static class AABullet {
-        private final Texture texture; // Texture of the anti-air bullet
+        /** Bullet, that are created by guns, and only hit ground enemies.
+         *
+         */
+        private final Texture texture;
 
         private float x, y; // Current position of the bullet
-        private final float speedX, speedY; // Speed of the bullet in both axes
+        private final float speedX, speedY;
 
         private final Rectangle hitBox; // Rectangle hitbox for collision detection
         private final BitmapFont font; // Font for debug information
@@ -111,7 +127,17 @@ public class GameClasses {
         private boolean active = true; // Whether the bullet is active
         private boolean debugMode = false; // Whether debug mode is enabled
 
-        private final Array<AirBadBoy> airBadBoysArray; // Array of air enemy units to check for collisions
+        private final Array<AirBadBoy> airBadBoysArray;
+
+        /**
+         * Constructor of bullet, that are created by AA-guns, and only hit air enemies.
+         * @param startX The x-coordinate, where the bullet should appear.
+         * @param startY The y-coordinate, where the bullet should appear.
+         * @param speedX The velocity, at which the bullet will fly along the coordinate x.
+         * @param speedY The velocity, at which the bullet will fly along the coordinate y.
+         * @param texture Bullet texture.
+         * @param airBadBoysArray List of enemies, that the bullet can shoot at.
+         */
 
         public AABullet(Texture texture, float startX, float startY, float speedX, float speedY, Array<AirBadBoy> airBadBoysArray) {
             this.texture = texture;
@@ -174,8 +200,10 @@ public class GameClasses {
         }
     }
 
-    // Represents a ground enemy unit
     public static class BadBoy {
+        /** Ground enemies
+         *
+         */
         private final Texture texture, redHp; // Textures for the enemy and its health bar background
         private final TextureRegion greenHp; // Texture region for the health bar foreground
 
@@ -192,6 +220,17 @@ public class GameClasses {
         private byte badBoyHP = 100; // Health of the enemy
         private float badBoyHpPercent = 1; // Percentage of health remaining
 
+        /**
+         * Ground enemies
+         * @param texture Enemy texture.
+         * @param circleHitBox Circle hitbox(needed for cannons to realize that the enemy is in their range).
+         * @param greenHp Texture for the green hp bar(will be removed in the future)
+         * @param x The x-coordinate, where the enemy should appear.
+         * @param y The y-coordinate, where the enemy should appear.
+         * @param redHp Texture for the red hp bar(will be removed in the future)
+         * @param rectangleHitBox Rectangle hitbox(needed for bullets to realize they hit an enemy)
+         */
+
         public BadBoy(Texture texture, Texture redHp, TextureRegion greenHp, short x, short y, Rectangle rectangleHitBox, Circle circleHitBox) {
             this.texture = texture;
 
@@ -207,7 +246,6 @@ public class GameClasses {
             this.circleHitBox = circleHitBox;
         }
 
-        // Updates the enemy's position and checks if it's still active
         public void update() {
             x--;
             rectangleHitBox.setX(x);
@@ -218,7 +256,6 @@ public class GameClasses {
             }
         }
 
-        // Draws the enemy and its health bar on the screen
         public void draw(Batch batch) {
             batch.draw(texture, x, y);
             batch.draw(redHp, x - 44, y + 96); // Draw the red (background) health bar
@@ -258,7 +295,7 @@ public class GameClasses {
 
     }
 
-    // Represents an air enemy unit
+
     public static class AirBadBoy {
         private final Texture texture, redHp; // Textures for the enemy and its health bar background
         private final TextureRegion greenHp; // Texture region for the health bar foreground
