@@ -2,7 +2,6 @@ package com.tds.game.level1;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -59,6 +58,9 @@ public class MainGameScreen implements Screen {
 
     /** Is debug mode enabled */
     private boolean isDebugEnabled = false;
+
+    /** Checks memory usage **/
+    Runtime runtime = Runtime.getRuntime();
 
     public MainGameScreen(Game game, AssetManager assetManager) {
         this.game = game;
@@ -146,6 +148,7 @@ public class MainGameScreen implements Screen {
                     assetManager.get("guns/AAGun.png", Texture.class),
                     assetManager.get("guns/2xGun.png", Texture.class),
                     assetManager.get("guns/5xGun.png", Texture.class),
+                    assetManager.get("guns/gunturret.jpg", Texture.class),
                     skin,
                     GunXCord,
                     (short) 128,
@@ -187,10 +190,9 @@ public class MainGameScreen implements Screen {
 
         // Toggle debug mode
         if (Gdx.input.isKeyPressed(Input.Keys.F1) || isDebugEnabled) {
+            font.draw(batch, "Memory in use: " + (runtime.totalMemory() / 1024 / 1024) + " MB", 0, Gdx.graphics.getHeight() - 150);
             update.enableDebugMode();
-            if (!isDebugEnabled) {
-                isDebugEnabled = true;
-            }
+            isDebugEnabled = !isDebugEnabled;
         }
 
         // Update and draw bullets and bad boys

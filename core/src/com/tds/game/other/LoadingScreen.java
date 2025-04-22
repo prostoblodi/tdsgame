@@ -98,6 +98,7 @@ public class LoadingScreen implements Screen {
         assetManager.load("guns/AAGun.png", Texture.class);
         assetManager.load("guns/2xGun.png", Texture.class);
         assetManager.load("guns/5xGun.png", Texture.class);
+        assetManager.load("guns/gunturret.jpg", Texture.class);
 
         assetManager.load("bad_boys/badBoys.png", Texture.class);
         assetManager.load("bad_boys/airBadBoy.png", Texture.class);

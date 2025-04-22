@@ -295,7 +295,6 @@ public class GameClasses {
 
     }
 
-
     public static class AirBadBoy {
         private final Texture texture, redHp; // Textures for the enemy and its health bar background
         private final TextureRegion greenHp; // Texture region for the health bar foreground
@@ -390,7 +389,7 @@ public class GameClasses {
         private final TextButton button2; // Button for upgrading the gun
 
         // Constructor initializes the gun with textures, position, and adds buttons to the stage
-        public Gun(Texture gunTexture, Texture gun2Texture, Texture gun3Texture, Texture gun4Texture, Skin buttonSkin, short x, short y, Stage stage) {
+        public Gun(Texture gunTexture, Texture gun2Texture, Texture gun3Texture, Texture gun4Texture, Texture gunTurret, Skin buttonSkin, short x, short y, Stage stage) {
 
             // Assign textures for different gun levels
             this.gunTexture = gunTexture;
