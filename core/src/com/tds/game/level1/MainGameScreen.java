@@ -60,7 +60,7 @@ public class MainGameScreen implements Screen {
     private boolean isDebugEnabled = false;
 
     /** Checks memory usage **/
-    Runtime runtime = Runtime.getRuntime();
+    Runtime runtime;
 
     public MainGameScreen(Game game, AssetManager assetManager) {
         this.game = game;
@@ -163,6 +163,7 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        runtime = Runtime.getRuntime();
         // Update the bad boys counter from the update logic
         badBoysCounter = update.badBoysCounter;
 
@@ -189,10 +190,16 @@ public class MainGameScreen implements Screen {
         }
 
         // Toggle debug mode
-        if (Gdx.input.isKeyPressed(Input.Keys.F1) || isDebugEnabled) {
-            font.draw(batch, "Memory in use: " + (runtime.totalMemory() / 1024 / 1024) + " MB", 0, Gdx.graphics.getHeight() - 150);
+        if (Gdx.input.isKeyPressed(Input.Keys.F1) && !isDebugEnabled) {
+            isDebugEnabled = true;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.F1) && isDebugEnabled) {
+            isDebugEnabled = false;
+            update.disableDebugMode();
+        }
+
+        if (isDebugEnabled){
+            font.draw(batch, "Memory usage: " + (runtime.totalMemory() / 1024 / 1024) + " MB", 0, Gdx.graphics.getHeight() - 160);
             update.enableDebugMode();
-            isDebugEnabled = !isDebugEnabled;
         }
 
         // Update and draw bullets and bad boys

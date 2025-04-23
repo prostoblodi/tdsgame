@@ -18,8 +18,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameClasses {
 
+    public interface debugAble {
+        void enableDebugMode();
+        void disableDebugMode();
+    }
 
-    public static class Bullet {
+    public static class Bullet implements debugAble {
         /** Bullet, that are created by guns, and only hit ground enemies.
          *
          */
@@ -102,9 +106,13 @@ public class GameClasses {
             return active;
         }
 
+        @Override
         public void enableDebugMode() {
             this.debugMode = true;
         }
+
+        @Override
+        public void disableDebugMode(){this.debugMode = false;}
 
         // Checks if the bullet is outside the screen boundaries
         private boolean isOutOfScreen() {
@@ -112,7 +120,7 @@ public class GameClasses {
         }
     }
 
-    public static class AABullet {
+    public static class AABullet implements debugAble {
         /** Bullet, that are created by guns, and only hit ground enemies.
          *
          */
@@ -190,9 +198,13 @@ public class GameClasses {
             return active;
         }
 
+        @Override
         public void enableDebugMode() {
             this.debugMode = true;
         }
+
+        @Override
+        public void disableDebugMode(){this.debugMode = false;}
 
         // Checks if the bullet is outside the screen boundaries
         private boolean isOutOfScreen() {
@@ -200,7 +212,7 @@ public class GameClasses {
         }
     }
 
-    public static class BadBoy {
+    public static class BadBoy implements debugAble {
         /** Ground enemies
          *
          */
@@ -272,9 +284,13 @@ public class GameClasses {
             return !active;
         }
 
+        @Override
         public void enableDebugMode() {
             this.debugMode = true;
         }
+
+        @Override
+        public void disableDebugMode(){this.debugMode = false;}
 
         public Rectangle getRectangleHitBox() {
             return rectangleHitBox;
@@ -295,7 +311,7 @@ public class GameClasses {
 
     }
 
-    public static class AirBadBoy {
+    public static class AirBadBoy implements debugAble {
         private final Texture texture, redHp; // Textures for the enemy and its health bar background
         private final TextureRegion greenHp; // Texture region for the health bar foreground
 
@@ -353,9 +369,13 @@ public class GameClasses {
             return !active;
         }
 
+        @Override
         public void enableDebugMode() {
             this.debugMode = true;
         }
+
+        @Override
+        public void disableDebugMode(){this.debugMode = false;}
 
         public Rectangle getRectangleHitBox() {
             return rectangleHitBox;

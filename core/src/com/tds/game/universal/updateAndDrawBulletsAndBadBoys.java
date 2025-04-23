@@ -41,6 +41,8 @@ public class updateAndDrawBulletsAndBadBoys {
     private final Array<GameClasses.AirBadBoy> airBadBoys = new Array<>();
     private final Array<GameClasses.Gun> guns;
 
+    private final Array<GameClasses.debugAble> debugAbles = new Array<>();
+
     Game game;
     AssetManager assetManager;
 
@@ -126,6 +128,13 @@ public class updateAndDrawBulletsAndBadBoys {
                 iter2.remove();
             }
         }
+
+        for (GameClasses.Bullet bullet : bullets){
+            debugAbles.add(bullet);
+        }
+        for (GameClasses.AABullet AAbullet : AAbullets){
+            debugAbles.add(AAbullet);
+        }
     }
 
     // Update and draw bad boys
@@ -201,6 +210,13 @@ public class updateAndDrawBulletsAndBadBoys {
                 iter2.remove();
             }
         }
+
+        for (GameClasses.BadBoy badBoy : badBoysArray){
+            debugAbles.add(badBoy);
+        }
+        for (GameClasses.AirBadBoy AirBadBoy : airBadBoys){
+            debugAbles.add(AirBadBoy);
+        }
     }
 
     // Spawn a bullet targeting the nearest bad boy
@@ -242,20 +258,15 @@ public class updateAndDrawBulletsAndBadBoys {
 
     // Enable debug mode for all objects
     public void enableDebugMode() {
-        for (GameClasses.BadBoy badBoy : badBoysArray) {
-            badBoy.enableDebugMode();
+        for (GameClasses.debugAble debugAble : debugAbles) {
+            debugAble.enableDebugMode();
         }
+    }
 
-        for (GameClasses.AirBadBoy airBadBoy : airBadBoys) {
-            airBadBoy.enableDebugMode();
-        }
-
-        for (GameClasses.Bullet bullet : bullets) {
-            bullet.enableDebugMode();
-        }
-
-        for (GameClasses.AABullet AAbullet : AAbullets) {
-            AAbullet.enableDebugMode();
+    // Enable debug mode for all objects
+    public void disableDebugMode() {
+        for (GameClasses.debugAble debugAble : debugAbles) {
+            debugAble.disableDebugMode();
         }
     }
 }
